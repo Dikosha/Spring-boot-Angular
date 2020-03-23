@@ -1,0 +1,7 @@
+.is-invalid{
+  border-bottom: 1px solid #ff0000;
+}
+.inv-feedback{
+  font-size: 0.8rem;
+  color: red;
+}

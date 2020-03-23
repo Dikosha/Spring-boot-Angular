@@ -1,0 +1,90 @@
+<div class="main">
+
+  <!-- Sign up form -->
+  <section class="signup">
+    <div class="container">
+      <div class="signup-content">
+        <div class="signup-form">
+          <h2 class="form-title">Sign up</h2>
+          <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && !emailBusy && model.password == model.re_password && registration()" class="register-form" id="register-form">
+            <div class="form-group">
+              <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+              <input type="text" name="name" id="name" placeholder="Your full name" [(ngModel)]="model.name"
+                #name="ngModel"
+                [ngClass]="{'is-invalid':f.submitted && name.invalid}"
+                required
+              />
+              <div *ngIf="f.submitted && name.invalid">
+                <div *ngIf="name.errors?.required" class="inv-feedback">Field is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email"><i class="zmdi zmdi-email"></i></label>
+              <input type="email" name="email" id="email"  placeholder="Your Email" [(ngModel)]="model.email"
+                     (focusin)="emailBusy=false"
+                     #email="ngModel"
+                     (focusout)="checkEmail(email.model)"
+                     [ngClass]="{'is-invalid':f.submitted && email.invalid && emailBusy}"
+                     required email
+              />
+              <div *ngIf="f.submitted && email.invalid">
+                <div *ngIf="email.errors?.required" class="inv-feedback">Field is required</div>
+                <div *ngIf="email.errors?.email" class="inv-feedback">Field is not valid email</div>
+              </div>
+              <div *ngIf="emailBusy" class="inv-feedback">Email is not free</div>
+
+            </div>
+
+
+<!--            TODO LIST: add phone number mask-->
+            <div class="form-group">
+              <label for="phone"><i class="zmdi zmdi-smartphone-android"></i></label>
+              <input type="phone" name="phone" id="phone" placeholder="Your phone number" [(ngModel)]="model.phone"
+                 #phone="ngModel"
+                 [ngClass]="{'is-invalid':f.submitted && phone.invalid}"
+                 required phone/>
+              <div *ngIf="f.submitted && phone.invalid">
+                <div *ngIf="phone.errors?.required" class="inv-feedback">Field is required</div>
+                <div *ngIf="phone.errors?.phone" class="inv-feedback">Field is not valid phone</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+              <input type="password" name="pass" id="pass" placeholder="Password" [(ngModel)]="model.password"
+                     #pass="ngModel"
+                     [ngClass]="{'is-invalid':f.submitted && pass.invalid}"
+                     required minlength="6"/>
+              <div *ngIf="f.submitted && pass.invalid">
+                <div *ngIf="pass.errors?.required" class="inv-feedback">Field is required</div>
+                <div *ngIf="pass.errors?.minlength" class="inv-feedback">Password is too small (minimum 6 characters) </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="re_pass"><i class="zmdi zmdi-lock-outline"></i></label>
+              <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" [(ngModel)]="model.re_password"
+                     #re_pass="ngModel"
+                     [ngClass]="{'is-invalid':f.submitted && model.password != model.re_password}"
+                     required
+              />
+              <div *ngIf="f.submitted">
+                <div *ngIf="re_pass.errors?.required" class="inv-feedback">Field is required</div>
+              </div>
+              <div *ngIf="model.password != model.re_password" class="inv-feedback">Passwords doesn't match</div>
+
+
+            </div>
+            <div class="form-group form-button">
+              <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+            </div>
+          </form>
+        </div>
+        <div class="signup-image">
+          <figure><img src="../../assets/images/man1.png" alt="sing up image"></figure>
+          <a href="login" class="signup-image-link">I am already member</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

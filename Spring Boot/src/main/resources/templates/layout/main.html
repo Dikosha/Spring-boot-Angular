@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="UTF-8">
+        <title>Instagram</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(191,102,24,0.98)" >
+                <a class="navbar-brand" href="/">Instagram</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{'/login'}" sec:authorize="isAnonymous()" th:text="#{label.signin}"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" sec:authorize="isAnonymous()" th:text = "#{label.register}"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{'/profile'}" sec:authorize="isAuthenticated()">Profile</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="JavaScript:void(0)" onclick="logout()" sec:authorize="isAuthenticated()">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{'?lng=en'}">ENG</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{'?lng=kz'}">КАЗ</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{'?lng=ru'}">РУС</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div sec:authorize="isAuthenticated()">
+                <form th:action = "@{'/logout'}" method="post" id="logoutFormId">
+                </form>
+                <script>
+                    function logout() {
+                        document.getElementById("logoutFormId").submit();
+                    }
+                </script>
+            </div>
+        </div>
+        <div class="container-fluid mt-5" layout:fragment="contentPart" style="min-height: 800px;">
+        </div>
+        <div class="container mt-5 pb-3 pt-3" style="background-color: rgba(5,10,76,0.98)">
+            <h6 style="color: white;">Copyright 2020, All Rights Reserved</h6>
+        </div>
+    </body>
+</html>
