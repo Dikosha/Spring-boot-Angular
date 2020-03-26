@@ -1,5 +1,7 @@
 package kz.iitu.swd.group34.FirstSpringBootIITU.config;
 
+import kz.iitu.swd.group34.FirstSpringBootIITU.security.jwt.AuthEntryPointJwt;
+import kz.iitu.swd.group34.FirstSpringBootIITU.security.jwt.AuthTokenFilter;
 import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +19,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true, securedEnabled = true)
+@EnableGlobalMethodSecurity(
+//        prePostEnabled = true,
+//        proxyTargetClass = true,
+        securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userService;
@@ -51,8 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/test/**").permitAll()
+                .authorizeRequests().antMatchers("/api/**").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

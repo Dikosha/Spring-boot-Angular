@@ -2,8 +2,11 @@ package kz.iitu.swd.group34.FirstSpringBootIITU.rest;
 
 import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Roles;
 import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Users;
+import kz.iitu.swd.group34.FirstSpringBootIITU.payload.response.JwtResponse;
 import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.RolesRepository;
 import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.UserRepository;
+import kz.iitu.swd.group34.FirstSpringBootIITU.security.jwt.JwtUtils;
+import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserDetailsImpl;
 import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -19,9 +24,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(path = "/api")
 public class MainRestController {
@@ -29,20 +37,25 @@ public class MainRestController {
     private final UserRepository userRepository;
     private final RolesRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
     MainRestController(UserRepository userRepository,
                        RolesRepository roleRepository,
                        UserService userService,
-                       PasswordEncoder passwordEncoder){
+                       PasswordEncoder passwordEncoder,
+                       JwtUtils jwtUtils,
+                       AuthenticationManager authenticationManager){
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
+        this.authenticationManager = authenticationManager;
     }
 
 
     @PostMapping(path = "/registration")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public String registration(@RequestBody Users users){
 //        Items item = itemsRepository.findByIdAndDeletedAtNull(id).get();
 //        item.setDeletedAt(new Date());
@@ -54,7 +67,7 @@ public class MainRestController {
         users.setPassword(passwordEncoder.encode(users.getPassword()));
         Users user  = new Users(null, users.getEmail(), users.getPassword(), users.getName(), users.getPhone(),roles);
         userRepository.save(user);
-        System.out.println(users.getName());
+//        System.out.println(users.getName());
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
@@ -63,35 +76,11 @@ public class MainRestController {
 
     }
 
-
-    @PostMapping(path = "/login")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public boolean login(@RequestBody User user) {
-        System.out.println("12345");
-        Users u = userRepository.findByEmail(user.getUsername());
-        if(u != null && passwordEncoder.matches(u.getPassword(), user.getPassword())){
-            return true;
-        }
-        return false;
-    }
-
-    @RequestMapping("/user")
-    public Principal user(HttpServletRequest request) {
-        String authToken = request.getHeader("Authorization")
-                .substring("Basic".length()).trim();
-        return () ->  new String(Base64.getDecoder()
-                .decode(authToken)).split(":")[0];
-    }
-
-
-
-
     @PostMapping(path = "/checkEmail")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public String checkEmail(@RequestBody String email){
         JSONObject jsonObject = new JSONObject();
-        System.out.println(email);
-        Users user = userRepository.findByEmail(email);
+//        System.out.println(email);
+        Users user = userRepository.findByEmail(email).get();
         if(user != null) {
             jsonObject.put("STATUS", HttpStatus.FOUND.value());
             jsonObject.put("ERROR", "Email found");
@@ -108,48 +97,30 @@ public class MainRestController {
 
     }
 
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody Users loginRequest) {
+        System.out.println("101");
+        System.out.println(loginRequest.toString());
+        System.out.println(loginRequest.getPassword());
 
-//    @PostMapping(path = "/registration")             //    REGISTRATION BY USER
-//    @CrossOrigin(origins = "*", allowedHeaders = "*")
-//    public ResponseEntity<String> addUser(@RequestBody Users users){
-//
-//        Users user = userRepository.findByEmail(email);
-//
-//        if(user == null){
-//
-//            if(!email.equals(null)) {
-//                return new ResponseEntity<>("email is null", HttpStatus.BAD_REQUEST);
-//            }
-//            if(!fullName.equals(null)) {
-//                return new ResponseEntity<>("Full name is null", HttpStatus.BAD_REQUEST);
-//            }
-//            if(password.length() < 6){
-//                return new ResponseEntity<>("Password too short", HttpStatus.BAD_REQUEST);
-//            }
-//            if(!password.equals(rePassword)){
-//                return new ResponseEntity<>("Passwords do not match", HttpStatus.BAD_REQUEST);
-//            }
-//
-//            Set<Roles> roles = new HashSet<>();
-//            Roles userRole = roleRepository.getOne(2L);
-//            roles.add(userRole);
-//
-//            user = new Users(null, email, password, fullName, roles, true);
-//            userService.registerUser(user);
-//
-//            return new ResponseEntity<>("User Registered", HttpStatus.OK);
-//        }
-//
-//        return new ResponseEntity<>("User already exists", HttpStatus.BAD_REQUEST);
-//    }
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-    public Users getUserData(){
-        Users userData = null;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(!(authentication instanceof AnonymousAuthenticationToken)){
-            User secUser = (User)authentication.getPrincipal();
-            userData = userRepository.findByEmail(secUser.getUsername());
-        }
-        return userData;
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+//        System.out.println("qwer5");
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getName(),
+                userDetails.getEmail(),
+                roles));
     }
+
 }

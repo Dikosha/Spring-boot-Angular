@@ -66,19 +66,19 @@ public class MainController {
     @PreAuthorize("isAuthenticated()")
     public String profilePage(Model model){
 
-        model.addAttribute("user", getUserData());
+//        model.addAttribute("user", getUserData());
 
         return "profile";
     }
 
-    public Users getUserData(){
-        Users userData = null;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(!(authentication instanceof AnonymousAuthenticationToken)){
-            User secUser = (User)authentication.getPrincipal();
-            userData = userRepository.findByEmail(secUser.getUsername());
-        }
-        return userData;
-    }
+//    public Users getUserData(){
+//        Users userData = null;
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if(!(authentication instanceof AnonymousAuthenticationToken)){
+//            User secUser = (User)authentication.getPrincipal();
+//            userData = userRepository.findByEmail(secUser.getUsername());
+//        }
+//        return userData;
+//    }
 
 }

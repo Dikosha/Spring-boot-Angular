@@ -3,13 +3,20 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavigationComponent } from './navigation/navigation.component';
 import { LoginComponent } from './login/login.component';
 import {Router, RouterModule, Routes} from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { FooterComponent } from './footer/footer.component';
+import { ServicesComponent } from './services/services.component';
+import { BarberShopComponent } from './barber-shop/barber-shop.component';
+import { AboutComponent } from './about/about.component';
+import { BlogComponent } from './blog/blog.component';
+import { ContactComponent } from './contact/contact.component';
 
 const appRoutes: Routes  = [
   {
@@ -17,12 +24,32 @@ const appRoutes: Routes  = [
     component: LoginComponent
   },
   {
+    path: '',
+    component: HomeComponent
+  },
+  {
     path: 'registration',
     component: RegistrationComponent
   },
   {
-    path: '',
-    component: NavigationComponent
+    path: 'services',
+    component: ServicesComponent
+  },
+  {
+    path: 'barbershop',
+    component: BarberShopComponent
+  },
+  {
+    path: 'about',
+    component: AboutComponent
+  },
+  {
+    path: 'blog',
+    component: BlogComponent
+  },
+  {
+    path: 'contact',
+    component: ContactComponent
   },
   {
     path: '**',
@@ -33,10 +60,17 @@ const appRoutes: Routes  = [
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
     LoginComponent,
     RegistrationComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    HomeComponent,
+    NavigationComponent,
+    FooterComponent,
+    ServicesComponent,
+    BarberShopComponent,
+    AboutComponent,
+    BlogComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

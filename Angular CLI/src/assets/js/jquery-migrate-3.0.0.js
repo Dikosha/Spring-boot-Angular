@@ -14,8 +14,7 @@ jQuery.migrateVersion = "3.0.0";
 	// Support: IE9 only
 	// IE9 only creates console object when dev tools are first opened
 	// Also, avoid Function#bind here to simplify PhantomJS usage
-	var log = window.console && window.console.log &&
-			function() { window.console.log.apply( window.console, arguments ); },
+	var log = window.console && window.console.log,
 		rbadVersions = /^[12]\./;
 
 	if ( !log ) {
@@ -59,9 +58,9 @@ function migrateWarn( msg ) {
 		warnedAbout[ msg ] = true;
 		jQuery.migrateWarnings.push( msg );
 		if ( console && console.warn && !jQuery.migrateMute ) {
-			console.warn( "JQMIGRATE: " + msg );
+			// console.warn( "JQMIGRATE: " + msg );
 			if ( jQuery.migrateTrace && console.trace ) {
-				console.trace();
+				// console.trace();
 			}
 		}
 	}

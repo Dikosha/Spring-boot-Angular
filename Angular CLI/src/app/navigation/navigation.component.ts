@@ -1,26 +1,32 @@
 import { Component, OnInit } from '@angular/core';
+import {AppComponent} from '../app.component';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {ScriptLoadingService} from '../_services/script-loading.service';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.css',
-    // '../styles/css/styles.css',
-    // '../styles/css/bootstrap.min.css',
-    // '../styles/css/bootstrap-datepicker.css',
-    // '../styles/css/jquery.fancybox.min.css',
-    // // '../styles/css/owl.carousel.min.css',
-    // '../styles/css/owl.theme.default.min.css',
-    // '../styles/fonts/flaticon/font/flaticon.css',
-    // '../styles/css/aos.css',
-    // '../styles/css/style.css'
-
-  ]
+  styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
-
-  constructor() { }
+  pageUrl = '';
+  constructor(public appComponent: AppComponent, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
+    this.appComponent.isLoggedIn = !!this.tokenStorageService.getToken();
+    if (this.appComponent.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.appComponent.roles = user.roles;
+
+      this.appComponent.showAdminBoard = this.appComponent.roles.includes('ROLE_ADMIN');
+      this.appComponent.username = user.username;
+    }
+  }
+
+
+  logout() {
+    this.tokenStorageService.signOut();
+    window.location.reload();
   }
 
 }
