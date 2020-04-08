@@ -23,29 +23,41 @@ export class ScriptLoadingService {
         'assets/js/main.js',
     ];
     private i = 0;
-
+    private firstLoad = true;
     constructor() { }
 
     public loadScript() {
-        const n = this.deleteScript();
-        // console.log(n);
-        // console.log('12345');
-        for (this.i = 0; this.i < this.url.length; this.i++) {
-            // if (n === 0) {
-            //     let node = document.createElement('script');
-            //     node.src = this.url[this.i];
-            //     node.type = 'text/javascript';
-            //     // node.async = true;
-            //     node.charset = 'utf-8';
-            //     document.getElementsByTagName('body')[0].appendChild(node);
-            // }
+        console.log(this.firstLoad);
+        if (this.firstLoad === false) {
+            const n = this.deleteScript();
+            // console.log(n);
+            // console.log('12345');
+            for (this.i = 0; this.i < this.url.length; this.i++) {
+                // if (n === 0) {
+                //     let node = document.createElement('script');
+                //     node.src = this.url[this.i];
+                //     node.type = 'text/javascript';
+                //     // node.async = true;
+                //     node.charset = 'utf-8';
+                //     document.getElementsByTagName('body')[0].appendChild(node);
+                // }
+                const node = document.createElement('script');
+                node.src = this.url[this.i];
+                node.setAttribute('class', 'scripts');
+                node.type = 'text/javascript';
+                // node.async = true;
+                node.charset = 'utf-8';
+                document.getElementsByTagName('head')[0].appendChild(node);
+            }
+        } else {
             const node = document.createElement('script');
-            node.src = this.url[this.i];
+            node.src = 'assets/js/main.js';
             node.setAttribute('class', 'scripts');
             node.type = 'text/javascript';
             // node.async = true;
             node.charset = 'utf-8';
             document.getElementsByTagName('head')[0].appendChild(node);
+            this.firstLoad = false;
         }
     }
     private deleteScript() {
