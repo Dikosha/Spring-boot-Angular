@@ -1,10 +1,11 @@
 package kz.iitu.swd.group34.FirstSpringBootIITU.rest;
 
+import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Record;
 import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Roles;
 import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Users;
 import kz.iitu.swd.group34.FirstSpringBootIITU.payload.response.JwtResponse;
-import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.RolesRepository;
-import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.UserRepository;
+import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.RecordPojo;
+import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.*;
 import kz.iitu.swd.group34.FirstSpringBootIITU.security.jwt.JwtUtils;
 import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserDetailsImpl;
 import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserService;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,6 +38,9 @@ import java.util.stream.Collectors;
 public class MainRestController {
 
     private final UserRepository userRepository;
+    private final RecordRepository recordRepository;
+    private final ServiceRepository serviceRepository;
+    private final MasterRepository masterRepository;
     private final RolesRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
@@ -42,12 +48,18 @@ public class MainRestController {
 
     @Autowired
     MainRestController(UserRepository userRepository,
+                       RecordRepository recordRepository,
                        RolesRepository roleRepository,
+                       ServiceRepository serviceRepository,
+                       MasterRepository masterRepository,
                        UserService userService,
                        PasswordEncoder passwordEncoder,
                        JwtUtils jwtUtils,
                        AuthenticationManager authenticationManager){
         this.userRepository = userRepository;
+        this.recordRepository = recordRepository;
+        this.serviceRepository = serviceRepository;
+        this.masterRepository = masterRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
@@ -62,7 +74,7 @@ public class MainRestController {
 //        itemsRepository.save(item);
 //        System.out.println();
         Set<Roles> roles = new HashSet<>();
-        Roles userRole = roleRepository.findById(2L).get();
+        Roles userRole = roleRepository.getOne(2L);
         roles.add(userRole);
         users.setPassword(passwordEncoder.encode(users.getPassword()));
         Users user  = new Users(null, users.getEmail(), users.getPassword(), users.getName(), users.getPhone(),roles);
@@ -80,8 +92,8 @@ public class MainRestController {
     public String checkEmail(@RequestBody String email){
         JSONObject jsonObject = new JSONObject();
 //        System.out.println(email);
-        Users user = userRepository.findByEmail(email).get();
-        if(user != null) {
+        Optional<Users> opt  = userRepository.findByEmail(email);
+        if(opt.isPresent()) {
             jsonObject.put("STATUS", HttpStatus.FOUND.value());
             jsonObject.put("ERROR", "Email found");
             jsonObject.put("RESULT", "");
@@ -121,6 +133,21 @@ public class MainRestController {
                 userDetails.getName(),
                 userDetails.getEmail(),
                 roles));
+    }
+
+    @PostMapping(path = "/addRecord")
+    public String addRecord(@RequestBody RecordPojo record) throws ParseException {
+
+        Record record1  = new Record(null, serviceRepository.findById(record.getService_id()).get(),
+                userRepository.findById(record.getClient_id()).get(), masterRepository.findById(record.getMaster_id()).get(),
+                new SimpleDateFormat("dd/MM/yyyy").parse(record.getDate()));
+        recordRepository.save(record1);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "some");
+        return jsonObject.toString();
+
     }
 
 }
