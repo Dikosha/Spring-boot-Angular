@@ -9,6 +9,7 @@ import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.*;
 import kz.iitu.swd.group34.FirstSpringBootIITU.security.jwt.JwtUtils;
 import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserDetailsImpl;
 import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserService;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jackson.JsonComponent;
@@ -111,9 +112,9 @@ public class MainRestController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody Users loginRequest) {
-        System.out.println("101");
-        System.out.println(loginRequest.toString());
-        System.out.println(loginRequest.getPassword());
+//        System.out.println("101");
+//        System.out.println(loginRequest.toString());
+//        System.out.println(loginRequest.getPassword());
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
@@ -136,18 +137,36 @@ public class MainRestController {
     }
 
     @PostMapping(path = "/addRecord")
-    public String addRecord(@RequestBody RecordPojo record) throws ParseException {
+    public String addRecord(@RequestBody RecordPojo record) {
 
-        Record record1  = new Record(null, serviceRepository.findById(record.getService_id()).get(),
-                userRepository.findById(record.getClient_id()).get(), masterRepository.findById(record.getMaster_id()).get(),
-                new SimpleDateFormat("dd/MM/yyyy").parse(record.getDate()));
+        Record record1  = new Record(null,
+                serviceRepository.findById(record.getService_id()).get(),
+                userRepository.findById(record.getClient_id()).get(),
+                masterRepository.findById(record.getMaster_id()).get(),
+                record.getDate());
         recordRepository.save(record1);
         JSONObject jsonObject = new JSONObject();
+
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
-        jsonObject.put("RESULT", "some");
+        jsonObject.put("RESULT", "Added");
         return jsonObject.toString();
-
     }
+
+    @PostMapping(path = "/deleteRecord")
+    public String deleteRecord(@RequestBody RecordPojo recordpojo) {
+
+        Record record = recordRepository.findById(recordpojo.getRecord_id()).get();
+        recordRepository.delete(record);
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "Deleted");
+        return jsonObject.toString();
+    }
+
+
+
 
 }
