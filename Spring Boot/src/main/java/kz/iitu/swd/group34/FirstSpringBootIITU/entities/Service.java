@@ -25,4 +25,7 @@ public class Service {
     @JoinColumn(name = "description")
     private String description;
 
+    @JoinColumn(name = "price")
+    private float price;
+
 }

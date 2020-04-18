@@ -1,9 +1,11 @@
 package kz.iitu.swd.group34.FirstSpringBootIITU.rest;
 
+import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Comment;
 import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Record;
 import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Roles;
 import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Users;
 import kz.iitu.swd.group34.FirstSpringBootIITU.payload.response.JwtResponse;
+import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.CommentPojo;
 import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.RecordPojo;
 import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.*;
 import kz.iitu.swd.group34.FirstSpringBootIITU.security.jwt.JwtUtils;
@@ -40,6 +42,7 @@ public class MainRestController {
     private final UserRepository userRepository;
     private final RecordRepository recordRepository;
     private final ServiceRepository serviceRepository;
+    private final CommentRepository commentRepository;
     private final MasterRepository masterRepository;
     private final RolesRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -50,6 +53,7 @@ public class MainRestController {
     MainRestController(UserRepository userRepository,
                        RecordRepository recordRepository,
                        RolesRepository roleRepository,
+                       CommentRepository commentRepository,
                        ServiceRepository serviceRepository,
                        MasterRepository masterRepository,
                        UserService userService,
@@ -59,6 +63,7 @@ public class MainRestController {
         this.userRepository = userRepository;
         this.recordRepository = recordRepository;
         this.serviceRepository = serviceRepository;
+        this.commentRepository = commentRepository;
         this.masterRepository = masterRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -140,7 +145,7 @@ public class MainRestController {
 
         Record record1  = new Record(null, serviceRepository.findById(record.getService_id()).get(),
                 userRepository.findById(record.getClient_id()).get(), masterRepository.findById(record.getMaster_id()).get(),
-                new SimpleDateFormat("dd/MM/yyyy").parse(record.getDate()));
+              record.getDate());
         recordRepository.save(record1);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("STATUS", 200);
@@ -149,5 +154,23 @@ public class MainRestController {
         return jsonObject.toString();
 
     }
+
+    @PostMapping(path = "/addCommentOnMaster")
+    public String addCommentOnMaster(@RequestBody CommentPojo comment ) throws ParseException {
+
+        Comment comment1 = new Comment(null, masterRepository.findById(comment.getMaster_id()).get(),
+                comment.getContent(), userRepository.findById(comment.getAuthor_id()).get(),
+                comment.getDate());
+        commentRepository.save(comment1);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "some");
+        return jsonObject.toString();
+
+    }
+
+
+
 
 }

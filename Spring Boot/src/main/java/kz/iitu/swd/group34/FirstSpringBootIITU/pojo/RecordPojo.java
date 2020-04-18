@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +14,7 @@ public class RecordPojo {
     private Long service_id;
     private Long client_id;
     private Long master_id;
-    private String date;
+    private Date date;
 
 
     public Long getService_id() {
@@ -39,11 +41,11 @@ public class RecordPojo {
         this.master_id = master_id;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

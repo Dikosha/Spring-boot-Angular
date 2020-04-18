@@ -6,32 +6,32 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "records")
-public class Record {
+@Table(name = "comments")
+public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "service")
-    private Service service;
-
-    @ManyToOne
-    @JoinColumn(name = "client")
-    private Users client;
-
-    @ManyToOne
-    @JoinColumn(name = "master")
+    @JoinColumn(name = "master_id")
     private Master master;
+
+    @Column(name = "content")
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users author;
 
     @Column(name = "date")
     private Date date;
 
 }
+
