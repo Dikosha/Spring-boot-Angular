@@ -44,7 +44,7 @@ export class RegistrationComponent implements OnInit {
   checkEmail(email): void {
     this.emailBusy = false;
     // console.log(email);
-    if (email != '') {
+    if (email !== '') {
       const url = 'http://localhost:8080/api/checkEmail';
       this.http.post(url, email)
         .subscribe(

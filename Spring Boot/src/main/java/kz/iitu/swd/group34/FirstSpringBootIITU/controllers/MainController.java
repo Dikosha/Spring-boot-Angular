@@ -1,6 +1,7 @@
 package kz.iitu.swd.group34.FirstSpringBootIITU.controllers;
 
 import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Users;
+import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.MasterRepository;
 import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -21,8 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MainController {
 
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    MainController(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     @GetMapping(value = "/")
     public String index(ModelMap model, @RequestParam(name = "page", defaultValue = "1") int page){
