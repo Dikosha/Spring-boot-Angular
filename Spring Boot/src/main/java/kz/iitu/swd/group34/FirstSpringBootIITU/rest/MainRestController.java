@@ -1,12 +1,11 @@
 package kz.iitu.swd.group34.FirstSpringBootIITU.rest;
 
-import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Comment;
-import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Record;
-import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Roles;
-import kz.iitu.swd.group34.FirstSpringBootIITU.entities.Users;
+import kz.iitu.swd.group34.FirstSpringBootIITU.entities.*;
 import kz.iitu.swd.group34.FirstSpringBootIITU.payload.response.JwtResponse;
 import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.CommentPojo;
+import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.MasterPojo;
 import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.RecordPojo;
+import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.ServicePojo;
 import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.*;
 import kz.iitu.swd.group34.FirstSpringBootIITU.security.jwt.JwtUtils;
 import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserDetailsImpl;
@@ -156,7 +155,7 @@ public class MainRestController {
 
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
-        jsonObject.put("RESULT", "Added");
+        jsonObject.put("RESULT", "new record added");
         return jsonObject.toString();
     }
 
@@ -169,7 +168,7 @@ public class MainRestController {
 
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
-        jsonObject.put("RESULT", "Deleted");
+        jsonObject.put("RESULT", "record deleted");
         return jsonObject.toString();
     }
 
@@ -183,12 +182,42 @@ public class MainRestController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
-        jsonObject.put("RESULT", "some");
+        jsonObject.put("RESULT", "new comment added");
         return jsonObject.toString();
 
     }
 
+    @PostMapping(path = "/addService")
+    public String addService(@RequestBody ServicePojo servicePojo) throws ParseException {
 
+        Service service = new Service(null, servicePojo.getName(),
+                servicePojo.getDescription(), servicePojo.getPrice());
+        serviceRepository.save(service);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "new service added");
+        return jsonObject.toString();
 
+    }
+
+    @PostMapping(path = "/addMaster")
+    public String addMaster(@RequestBody MasterPojo masterPojo) throws ParseException {
+
+        Set<Service> services = new HashSet<>();
+        for(Long id : masterPojo.getServices()){
+            services.add(serviceRepository.getOne(id));
+        }
+
+        Master master = new Master(null, masterPojo.getName(),
+                masterPojo.getPhone(), services);
+        masterRepository.save(master);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "new master added");
+        return jsonObject.toString();
+
+    }
 
 }
