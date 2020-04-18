@@ -174,20 +174,42 @@ public class MainRestController {
     }
 
     @PostMapping(path = "/addCommentOnMaster")
-    public String addCommentOnMaster(@RequestBody CommentPojo comment ) throws ParseException {
+    public String addCommentOnMaster(@RequestBody CommentPojo commentPojo ) throws ParseException {
 
-        Comment comment1 = new Comment(null, masterRepository.findById(comment.getMaster_id()).get(),
-                comment.getContent(), userRepository.findById(comment.getAuthor_id()).get(),
-                comment.getDate());
-        commentRepository.save(comment1);
+        Comment comment = new Comment(null, masterRepository.findById(commentPojo.getMaster_id()).get(),
+                commentPojo.getContent(), userRepository.findById(commentPojo.getAuthor_id()).get(),
+                commentPojo.getDate());
+        commentRepository.save(comment);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
-        jsonObject.put("RESULT", "some");
+        jsonObject.put("RESULT", "Added");
         return jsonObject.toString();
-
     }
 
+    @PostMapping(path = "/getAllRecords")
+    public String getAllRecords() {
+
+        List<Record> recordList = recordRepository.findAll();
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonData = new JSONObject();
+        for(int i = 0; i < recordList.size(); i++){
+            jsonData.put("record_id", recordList.get(i).getId());
+            jsonData.put("service_name", recordList.get(i).getService().getName());
+            jsonData.put("master_name", recordList.get(i).getMaster().getName());
+            jsonData.put("client_name", recordList.get(i).getClient().getName());
+            jsonData.put("client_name", recordList.get(i).getClient().getPhone());
+            jsonData.put("client_name", recordList.get(i).getClient().getEmail());
+            jsonData.put("master_phone", recordList.get(i).getMaster().getPhone());
+            jsonArray.put(jsonData);
+        }
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonArray);
+        return jsonObject.toString();
+    }
 
 
 
