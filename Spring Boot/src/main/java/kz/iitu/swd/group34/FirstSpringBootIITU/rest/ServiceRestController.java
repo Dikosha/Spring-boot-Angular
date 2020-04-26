@@ -79,8 +79,41 @@ public class ServiceRestController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
-        jsonObject.put("RESULT", "new service added");
         jsonObject.put("RESULT", "Added");
         return jsonObject.toString();
     }
+
+    @PostMapping(path = "/deleteService")
+    public String deleteService(@RequestBody Long id) {
+
+        Service service = serviceRepository.findById(id).get();
+        serviceRepository.delete(service);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "Deleted");
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/getAllService")
+    public String getAllUsers() {
+        List<Service> servicesList = serviceRepository.findAll();
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonData = new JSONObject();
+        for(int i = 0; i < servicesList.size(); i++){
+            jsonData.put("service_id", servicesList.get(i).getId());
+            jsonData.put("service_name", servicesList.get(i).getName());
+            jsonData.put("service_description", servicesList.get(i).getDescription());
+            jsonData.put("service_price", servicesList.get(i).getPrice());
+
+            jsonArray.put(jsonData);
+        }
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonArray);
+        return jsonObject.toString();
+    }
+
 }

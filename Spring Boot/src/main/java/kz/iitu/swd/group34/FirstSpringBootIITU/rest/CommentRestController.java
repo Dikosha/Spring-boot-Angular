@@ -85,4 +85,19 @@ public class CommentRestController {
         return jsonObject.toString();
 
     }
+
+    @PostMapping(path = "/deleteComment")
+    public String deleteComment(@RequestBody Long id) {
+
+        Comment comment = commentRepository.findById(id).get();
+        commentRepository.delete(comment);
+
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "deleted");
+        return jsonObject.toString();
+    }
 }
