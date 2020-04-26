@@ -10,13 +10,12 @@ export class AddRecordComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  model: AddRecordViewModel = {
-    name: '',
+  /*model: AddRecordViewModel = {
     email: '',
     phone: '',
     password: '',
     re_password: ''
-  };
+  }; */
   emailBusy = false;
   isRegistered = false;
 

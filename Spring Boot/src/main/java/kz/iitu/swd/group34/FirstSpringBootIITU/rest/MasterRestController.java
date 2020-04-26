@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(path = "/api")
-public class MainRestController {
+public class MasterRestController {
 
     private final UserRepository userRepository;
     private final RecordRepository recordRepository;
@@ -50,13 +50,12 @@ public class MainRestController {
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    MainRestController(UserRepository userRepository,
+    MasterRestController(UserRepository userRepository,
                        RecordRepository recordRepository,
                        RolesRepository roleRepository,
                        CommentRepository commentRepository,
                        ServiceRepository serviceRepository,
                        MasterRepository masterRepository,
-                       UserService userService,
                        PasswordEncoder passwordEncoder,
                        JwtUtils jwtUtils,
                        AuthenticationManager authenticationManager){
@@ -71,73 +70,23 @@ public class MainRestController {
         this.authenticationManager = authenticationManager;
     }
 
+    @PostMapping(path = "/addMaster")
+    public String addMaster(@RequestBody MasterPojo masterPojo) {
 
-    @PostMapping(path = "/registration")
-    public String registration(@RequestBody Users users){
-//        Items item = itemsRepository.findByIdAndDeletedAtNull(id).get();
-//        item.setDeletedAt(new Date());
-//        itemsRepository.save(item);
-//        System.out.println();
-        Set<Roles> roles = new HashSet<>();
-        Roles userRole = roleRepository.getOne(2L);
-        roles.add(userRole);
-        users.setPassword(passwordEncoder.encode(users.getPassword()));
-        Users user  = new Users(null, users.getEmail(), users.getPassword(), users.getName(), users.getPhone(),roles);
-        userRepository.save(user);
-//        System.out.println(users.getName());
+        Set<Service> services = new HashSet<>();
+        for(Long id : masterPojo.getServices()){
+            services.add(serviceRepository.getOne(id));
+        }
+
+        Master master = new Master(null, masterPojo.getName(),
+                masterPojo.getPhone(), services);
+        masterRepository.save(master);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
-        jsonObject.put("RESULT", "some");
+        jsonObject.put("RESULT", "new master added");
         return jsonObject.toString();
 
     }
-
-    @PostMapping(path = "/checkEmail")
-    public String checkEmail(@RequestBody String email){
-        JSONObject jsonObject = new JSONObject();
-//        System.out.println(email);
-        Optional<Users> opt  = userRepository.findByEmail(email);
-        if(opt.isPresent()) {
-            jsonObject.put("STATUS", HttpStatus.FOUND.value());
-            jsonObject.put("ERROR", "Email found");
-            jsonObject.put("RESULT", "");
-        }
-        else{
-            jsonObject.put("STATUS", HttpStatus.OK.value());
-            jsonObject.put("ERROR", "");
-            jsonObject.put("RESULT", "");
-        }
-
-
-        return jsonObject.toString();
-
-    }
-
-    @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody Users loginRequest) {
-//        System.out.println("101");
-//        System.out.println(loginRequest.toString());
-//        System.out.println(loginRequest.getPassword());
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
-//        System.out.println("qwer5");
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getName(),
-                userDetails.getEmail(),
-                roles));
-    }
-
 }
+
