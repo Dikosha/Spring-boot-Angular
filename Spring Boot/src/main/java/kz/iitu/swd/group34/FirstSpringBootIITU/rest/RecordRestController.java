@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(path = "/api")
-public class MainRestController {
+public class RecordRestController {
 
     private final UserRepository userRepository;
     private final RecordRepository recordRepository;
@@ -50,13 +50,12 @@ public class MainRestController {
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    MainRestController(UserRepository userRepository,
+    RecordRestController(UserRepository userRepository,
                        RecordRepository recordRepository,
                        RolesRepository roleRepository,
                        CommentRepository commentRepository,
                        ServiceRepository serviceRepository,
                        MasterRepository masterRepository,
-                       UserService userService,
                        PasswordEncoder passwordEncoder,
                        JwtUtils jwtUtils,
                        AuthenticationManager authenticationManager){
@@ -71,73 +70,63 @@ public class MainRestController {
         this.authenticationManager = authenticationManager;
     }
 
+    @PostMapping(path = "/addRecord")
+    public String addRecord(@RequestBody RecordPojo recordpojo) {
 
-    @PostMapping(path = "/registration")
-    public String registration(@RequestBody Users users){
-//        Items item = itemsRepository.findByIdAndDeletedAtNull(id).get();
-//        item.setDeletedAt(new Date());
-//        itemsRepository.save(item);
-//        System.out.println();
-        Set<Roles> roles = new HashSet<>();
-        Roles userRole = roleRepository.getOne(2L);
-        roles.add(userRole);
-        users.setPassword(passwordEncoder.encode(users.getPassword()));
-        Users user  = new Users(null, users.getEmail(), users.getPassword(), users.getName(), users.getPhone(),roles);
-        userRepository.save(user);
-//        System.out.println(users.getName());
+
+        Record record  = new Record(null,
+                serviceRepository.findById(recordpojo.getService_id()).get(),
+                userRepository.findById(recordpojo.getClient_id()).get(),
+                masterRepository.findById(recordpojo.getMaster_id()).get(),
+                recordpojo.getDate());
+
+        recordRepository.save(record);
         JSONObject jsonObject = new JSONObject();
+
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
-        jsonObject.put("RESULT", "some");
+        jsonObject.put("RESULT", "new record added");
         return jsonObject.toString();
-
     }
 
-    @PostMapping(path = "/checkEmail")
-    public String checkEmail(@RequestBody String email){
+    @PostMapping(path = "/deleteRecord")
+    public String deleteRecord(@RequestBody Long recordId) {
+
+        Record record = recordRepository.findById(recordId).get();
+        recordRepository.delete(record);
         JSONObject jsonObject = new JSONObject();
-//        System.out.println(email);
-        Optional<Users> opt  = userRepository.findByEmail(email);
-        if(opt.isPresent()) {
-            jsonObject.put("STATUS", HttpStatus.FOUND.value());
-            jsonObject.put("ERROR", "Email found");
-            jsonObject.put("RESULT", "");
-        }
-        else{
-            jsonObject.put("STATUS", HttpStatus.OK.value());
-            jsonObject.put("ERROR", "");
-            jsonObject.put("RESULT", "");
-        }
 
-
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "record deleted");
         return jsonObject.toString();
-
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody Users loginRequest) {
-//        System.out.println("101");
-//        System.out.println(loginRequest.toString());
-//        System.out.println(loginRequest.getPassword());
+    @PostMapping(path = "/getAllRecords")
+    public String getAllRecords() {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+        List<Record> recordList = recordRepository.findAll();
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonData = new JSONObject();
+        for(int i = 0; i < recordList.size(); i++){
+            jsonData.put("record_id", recordList.get(i).getId());
+            jsonData.put("service_name", recordList.get(i).getService().getName());
+            jsonData.put("master_name", recordList.get(i).getMaster().getName());
+            jsonData.put("client_name", recordList.get(i).getClient().getName());
+            jsonData.put("client_phone", recordList.get(i).getClient().getPhone());
+            jsonData.put("client_email", recordList.get(i).getClient().getEmail());
+            jsonData.put("master_phone", recordList.get(i).getMaster().getPhone());
+            jsonArray.put(jsonData);
+        }
+        JSONObject jsonObject = new JSONObject();
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
-//        System.out.println("qwer5");
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getName(),
-                userDetails.getEmail(),
-                roles));
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonArray);
+        return jsonObject.toString();
     }
+
+
 
 }
+
