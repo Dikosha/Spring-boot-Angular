@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/master")
 public class MasterRestController {
 
     private final UserRepository userRepository;

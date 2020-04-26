@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/admin")
 public class AdminRestController {
 
     private final UserRepository userRepository;
@@ -69,4 +69,37 @@ public class AdminRestController {
         this.jwtUtils = jwtUtils;
         this.authenticationManager = authenticationManager;
     }
+
+    @PostMapping(path = "/blockUser")
+    public String blockUser(@RequestBody Long id) {
+
+        Users user = userRepository.findById(id).get();
+        user.setIsBlocked(true);
+        userRepository.save(user);
+
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "blocked");
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/unblockUser")
+    public String unblockUser(@RequestBody Long id) {
+
+        Users user = userRepository.findById(id).get();
+        user.setIsBlocked(false);
+        userRepository.save(user);
+
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "inblocked");
+        return jsonObject.toString();
+    }
+
 }
