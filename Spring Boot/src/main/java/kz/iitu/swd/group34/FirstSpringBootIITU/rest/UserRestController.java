@@ -2,10 +2,7 @@ package kz.iitu.swd.group34.FirstSpringBootIITU.rest;
 
 import kz.iitu.swd.group34.FirstSpringBootIITU.entities.*;
 import kz.iitu.swd.group34.FirstSpringBootIITU.payload.response.JwtResponse;
-import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.CommentPojo;
-import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.MasterPojo;
-import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.RecordPojo;
-import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.ServicePojo;
+import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.*;
 import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.*;
 import kz.iitu.swd.group34.FirstSpringBootIITU.security.jwt.JwtUtils;
 import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserDetailsImpl;
@@ -71,5 +68,77 @@ public class UserRestController {
     }
 
 
+    @PostMapping(path = "/profile")
+    public String profileUser(@RequestBody Long userId) {
 
+        Users user = userRepository.getOne(userId);
+        List<Record> records = recordRepository.findAllByClient(user);
+
+        JSONObject jsonObject = new JSONObject();
+        JSONObject jsonData = new JSONObject();
+        JSONArray jsonArrayOfRecords = new JSONArray();
+        JSONObject jsonUserInformation = new JSONObject();
+
+        for(Record r : records){
+            JSONObject jsonRecord = new JSONObject();
+            jsonRecord.put("record_id", r.getId());
+            jsonRecord.put("record_master_name", r.getMaster().getName());
+            jsonRecord.put("record_service", r.getService().getName());
+            jsonRecord.put("record_date", r.getDate());
+
+            jsonArrayOfRecords.put(jsonRecord);
+        }
+
+        jsonUserInformation.put("user_name", user.getName());
+        jsonUserInformation.put("user_email", user.getEmail());
+        jsonUserInformation.put("user_phone", user.getPhone());
+
+        jsonData.put("user", jsonUserInformation);
+        jsonData.put("records", jsonArrayOfRecords);
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonData);
+
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/editInformation")
+    public String editUser(@RequestBody UserInfoPojo userPojo) {
+
+        Users user = userRepository.getOne(userPojo.getId());
+        user.setName(userPojo.getName());
+        user.setEmail(userPojo.getEmail());
+        user.setPhone(userPojo.getPhone());
+
+        userRepository.save(user);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "user information updated");
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/updatePassword")
+    public String updatePassword(@RequestBody UserPasswordPojo userPasswordPojo) {
+
+        Users user = userRepository.getOne(userPasswordPojo.getId());
+        JSONObject jsonObject = new JSONObject();
+
+        if(passwordEncoder.matches(userPasswordPojo.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(userPasswordPojo.getNewPassword()));
+            userRepository.save(user);
+            jsonObject.put("STATUS", 200);
+            jsonObject.put("ERROR", "");
+            jsonObject.put("RESULT", "password updated");
+        }
+        else {
+            jsonObject.put("STATUS", 200);
+            jsonObject.put("ERROR", "old password is incorrect");
+            jsonObject.put("RESULT", "passwords NOT updated");
+        }
+
+        return jsonObject.toString();
+    }
 }
