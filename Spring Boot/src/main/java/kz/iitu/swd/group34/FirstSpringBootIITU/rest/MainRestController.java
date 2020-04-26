@@ -234,7 +234,7 @@ public class MainRestController {
             jsonData.put("master_name", recordList.get(i).getMaster().getName());
             jsonData.put("client_name", recordList.get(i).getClient().getName());
             jsonData.put("client_phone", recordList.get(i).getClient().getPhone());
-            jsonData.put("client_email", recordList.get(i).getClient().getEmail());
+            jsonData.put("client_email  ", recordList.get(i).getClient().getEmail());
             jsonData.put("master_phone", recordList.get(i).getMaster().getPhone());
             jsonArray.put(jsonData);
         }
