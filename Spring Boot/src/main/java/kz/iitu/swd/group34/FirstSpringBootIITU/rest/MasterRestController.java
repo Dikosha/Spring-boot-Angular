@@ -39,38 +39,23 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/master")
 public class MasterRestController {
 
-    private final UserRepository userRepository;
     private final RecordRepository recordRepository;
     private final ServiceRepository serviceRepository;
     private final CommentRepository commentRepository;
     private final MasterRepository masterRepository;
-    private final RolesRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtils jwtUtils;
-    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    MasterRestController(UserRepository userRepository,
-                       RecordRepository recordRepository,
-                       RolesRepository roleRepository,
+    MasterRestController(RecordRepository recordRepository,
                        CommentRepository commentRepository,
                        ServiceRepository serviceRepository,
-                       MasterRepository masterRepository,
-                       PasswordEncoder passwordEncoder,
-                       JwtUtils jwtUtils,
-                       AuthenticationManager authenticationManager){
-        this.userRepository = userRepository;
+                       MasterRepository masterRepository){
         this.recordRepository = recordRepository;
         this.serviceRepository = serviceRepository;
         this.commentRepository = commentRepository;
         this.masterRepository = masterRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtils = jwtUtils;
-        this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping(path = "/addMaster")
+    @PostMapping(path = "/addNew")
     public String addMaster(@RequestBody MasterPojo masterPojo) {
 
         Set<Service> services = new HashSet<>();
@@ -88,5 +73,89 @@ public class MasterRestController {
         return jsonObject.toString();
 
     }
+
+    @PostMapping(path = "/delete")
+    public String deleteMaster(@RequestBody Long masterId) {
+
+        Master master = masterRepository.findById(masterId).get();
+        masterRepository.delete(master);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "master deleted");
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/editInformation")
+    public String editMaster(@RequestBody MasterPojo masterPojo) {
+
+        Set<Service> services = new HashSet<>();
+        for(Long id : masterPojo.getServices()){
+            services.add(serviceRepository.getOne(id));
+        }
+        Master master = masterRepository.getOne(masterPojo.getId());
+        master.setName(masterPojo.getName());
+        master.setPhone(masterPojo.getPhone());
+        master.setServices(services);
+
+        masterRepository.save(master);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "master information updated");
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/profile")
+    public String profileMaster(@RequestBody Long masterId) {
+
+        Master master = masterRepository.getOne(masterId);
+        List<Comment> comments = commentRepository.findAllByMaster(master);
+
+        JSONObject jsonObject = new JSONObject();
+        JSONObject jsonData = new JSONObject();
+        JSONArray jsonArrayOfComments = new JSONArray();
+        JSONArray jsonArrayOfServices = new JSONArray();
+        JSONObject jsonMasterInformation = new JSONObject();
+
+        for(Comment c : comments){
+            JSONObject jsonComment = new JSONObject();
+            jsonComment.put("comment_id", c.getId());
+            jsonComment.put("comment_author", c.getAuthor());
+            jsonComment.put("comment_content", c.getContent());
+            jsonComment.put("comment_date", c.getDate());
+
+            jsonArrayOfComments.put(jsonComment);
+        }
+
+        for(Service s : masterRepository.getOne(masterId).getServices()){
+            JSONObject jsonService = new JSONObject();
+            jsonService.put("service_id", s.getId());
+            jsonService.put("service_name", s.getName());
+
+            jsonArrayOfServices.put(jsonService);
+        }
+
+
+        jsonMasterInformation.put("master_name", master.getName());
+        jsonMasterInformation.put("master_phone", master.getPhone());
+        jsonMasterInformation.put("master_name", master.getName());
+        jsonMasterInformation.put("master_name", master.getName());
+
+
+        jsonData.put("master", jsonMasterInformation);
+        jsonData.put("comments", jsonArrayOfComments);
+        jsonData.put("services", jsonArrayOfServices);
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonData);
+
+
+        return jsonObject.toString();
+    }
+
+
 }
 
