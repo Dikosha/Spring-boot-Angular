@@ -82,7 +82,7 @@ public class MainRestController {
         Roles userRole = roleRepository.getOne(2L);
         roles.add(userRole);
         users.setPassword(passwordEncoder.encode(users.getPassword()));
-        Users user  = new Users(null, users.getEmail(), users.getPassword(), users.getName(), users.getPhone(),roles);
+        Users user  = new Users(null, users.getEmail(), users.getPassword(), users.getName(), users.getPhone(), false, roles);
         userRepository.save(user);
 //        System.out.println(users.getName());
         JSONObject jsonObject = new JSONObject();
