@@ -4,13 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class ServicePojo {
+@NoArgsConstructor
+public class UserInfoPojo {
 
     private Long id;
     private String name;
-    private String description;
-    private float price;
+    private String phone;
+    private String email;
+
 }

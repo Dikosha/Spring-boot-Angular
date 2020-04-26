@@ -29,9 +29,11 @@ public class Users {
     @Column(name = "name")
     private String name;
 
-
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "isBlocked")
+    private Boolean isBlocked;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Roles> roles;

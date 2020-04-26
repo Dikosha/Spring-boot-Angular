@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/comment")
 public class CommentRestController {
 
     private final UserRepository userRepository;
@@ -84,5 +84,20 @@ public class CommentRestController {
         jsonObject.put("RESULT", "new comment added");
         return jsonObject.toString();
 
+    }
+
+    @PostMapping(path = "/deleteComment")
+    public String deleteComment(@RequestBody Long id) {
+
+        Comment comment = commentRepository.findById(id).get();
+        commentRepository.delete(comment);
+
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "deleted");
+        return jsonObject.toString();
     }
 }

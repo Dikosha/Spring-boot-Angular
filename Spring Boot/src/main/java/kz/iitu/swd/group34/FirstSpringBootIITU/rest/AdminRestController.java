@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/admin")
 public class AdminRestController {
 
     private final UserRepository userRepository;
@@ -69,4 +69,60 @@ public class AdminRestController {
         this.jwtUtils = jwtUtils;
         this.authenticationManager = authenticationManager;
     }
+
+    @PostMapping(path = "/getAllUsers")
+    public String getAllUsers() {
+
+        List<Users> usersList = userRepository.findAll();
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonData = new JSONObject();
+        for(int i = 0; i < usersList.size(); i++){
+            jsonData.put("user_id", usersList.get(i).getId());
+            jsonData.put("user_email", usersList.get(i).getEmail());
+            jsonData.put("user_name", usersList.get(i).getName());
+            jsonData.put("user_phone", usersList.get(i).getPhone());
+
+            jsonArray.put(jsonData);
+        }
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonArray);
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/blockUser")
+    public String blockUser(@RequestBody Long id) {
+
+        Users user = userRepository.findById(id).get();
+        user.setIsBlocked(true);
+        userRepository.save(user);
+
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "blocked");
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/unblockUser")
+    public String unblockUser(@RequestBody Long id) {
+
+        Users user = userRepository.findById(id).get();
+        user.setIsBlocked(false);
+        userRepository.save(user);
+
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "unblocked");
+
+        return jsonObject.toString();
+    }
+
 }
