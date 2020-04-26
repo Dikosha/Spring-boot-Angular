@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServicePojo {
+
+    private Long id;
     private String name;
     private String description;
     private float price;

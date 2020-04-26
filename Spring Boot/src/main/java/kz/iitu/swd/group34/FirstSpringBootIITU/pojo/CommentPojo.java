@@ -11,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class CommentPojo {
 
+    private Long id;
     private Long master_id;
     private String content;
     private Long author_id;
