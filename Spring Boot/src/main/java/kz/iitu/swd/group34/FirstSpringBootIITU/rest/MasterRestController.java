@@ -122,7 +122,7 @@ public class MasterRestController {
         for(Comment c : comments){
             JSONObject jsonComment = new JSONObject();
             jsonComment.put("comment_id", c.getId());
-            jsonComment.put("comment_author", c.getAuthor());
+            jsonComment.put("comment_author", c.getAuthor().getName());
             jsonComment.put("comment_content", c.getContent());
             jsonComment.put("comment_date", c.getDate());
 
@@ -140,12 +140,9 @@ public class MasterRestController {
 
         jsonMasterInformation.put("master_name", master.getName());
         jsonMasterInformation.put("master_phone", master.getPhone());
-        jsonMasterInformation.put("master_name", master.getName());
-        jsonMasterInformation.put("master_name", master.getName());
-
 
         jsonData.put("master", jsonMasterInformation);
-        jsonData.put("comments", jsonArrayOfComments);
+        jsonData.put("master_comments", jsonArrayOfComments);
         jsonData.put("services", jsonArrayOfServices);
 
         jsonObject.put("STATUS", 200);
@@ -156,6 +153,28 @@ public class MasterRestController {
         return jsonObject.toString();
     }
 
+    @PostMapping(path = "/getAll")
+    public String getAllMasters() {
+
+        List<Master> masters = masterRepository.findAll();
+        JSONArray jsonArray = new JSONArray();
+
+        for(Master m : masters) {
+            JSONObject jsonData = new JSONObject();
+            jsonData.put("master_id", m.getId());
+            jsonData.put("master_name", m.getName());
+            jsonArray.put(jsonData);
+        }
+
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonArray);
+
+        return jsonObject.toString();
+
+    }
 
 }
 

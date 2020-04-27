@@ -25,7 +25,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   registration(): void {
-    const url = 'http://localhost:8080/api/registration';
+    const url = 'http://localhost:8080/main/registration';
     this.http.post(url, this.model).subscribe(
       res => {
         console.log(res);
@@ -45,7 +45,7 @@ export class RegistrationComponent implements OnInit {
     this.emailBusy = false;
     // console.log(email);
     if (email !== '') {
-      const url = 'http://localhost:8080/api/checkEmail';
+      const url = 'http://localhost:8080/main/checkEmail';
       this.http.post(url, email)
         .subscribe(
           res => {

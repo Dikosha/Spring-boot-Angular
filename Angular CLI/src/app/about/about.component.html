@@ -43,16 +43,16 @@
         </div>
         <div class="row align-items-stretch">
 
-            <div class="col-lg-4 col-md-6 mb-5">
+            <div class="col-lg-4 col-md-6 mb-5" *ngFor="let item of masters">
                 <div class="post-entry-1 h-100 person-1">
 
                     <img src="../../assets/images/person_1.jpg" alt="Image"
                          class="img-fluid">
 
                     <div class="post-entry-1-contents">
-                        <span class="meta">Founder</span>
-                        <h2>James Doe</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, sapiente.</p>
+                        <span class="meta">Master</span>
+                        <h2>{{item.master_name}}</h2>
+                        <p>I Am Master.</p>
                     </div>
                 </div>
             </div>
