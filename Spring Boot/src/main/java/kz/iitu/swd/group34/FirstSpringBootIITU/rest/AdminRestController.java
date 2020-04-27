@@ -1,15 +1,9 @@
 package kz.iitu.swd.group34.FirstSpringBootIITU.rest;
 
 import kz.iitu.swd.group34.FirstSpringBootIITU.entities.*;
-import kz.iitu.swd.group34.FirstSpringBootIITU.payload.response.JwtResponse;
-import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.CommentPojo;
-import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.MasterPojo;
-import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.RecordPojo;
 import kz.iitu.swd.group34.FirstSpringBootIITU.pojo.ServicePojo;
 import kz.iitu.swd.group34.FirstSpringBootIITU.repositories.*;
 import kz.iitu.swd.group34.FirstSpringBootIITU.security.jwt.JwtUtils;
-import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserDetailsImpl;
-import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +61,7 @@ public class AdminRestController {
             jsonData.put("user_email", usersList.get(i).getEmail());
             jsonData.put("user_name", usersList.get(i).getName());
             jsonData.put("user_phone", usersList.get(i).getPhone());
+            jsonData.put("user_isBlocked", usersList.get(i).getIsBlocked());
             jsonArray.put(jsonData);
         }
         JSONObject jsonObject = new JSONObject();
@@ -108,5 +103,67 @@ public class AdminRestController {
 
         return jsonObject.toString();
     }
+
+    @PostMapping(path = "/addService")
+    public String addService(@RequestBody ServicePojo servicePojo) {
+
+        Service service = new Service(null, servicePojo.getName(),
+                servicePojo.getDescription(), servicePojo.getPrice());
+        serviceRepository.save(service);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "Added");
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/editService")
+    public String editService(@RequestBody ServicePojo servicePojo) {
+
+        Service service = serviceRepository.findById(servicePojo.getId()).get();
+        service.setDescription(servicePojo.getDescription());
+        service.setName(servicePojo.getName());
+        service.setPrice(servicePojo.getPrice());
+        serviceRepository.save(service);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "Updated");
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/deleteService")
+    public String deleteService(@RequestBody Long id) {
+
+        Service service = serviceRepository.findById(id).get();
+        serviceRepository.delete(service);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", "Deleted");
+        return jsonObject.toString();
+    }
+
+    @PostMapping(path = "/getAllServices")
+    public String getAllService() {
+        List<Service> servicesList = serviceRepository.findAll();
+        JSONArray jsonArray = new JSONArray();
+        for(int i = 0; i < servicesList.size(); i++){
+            JSONObject jsonData = new JSONObject();
+            jsonData.put("service_id", servicesList.get(i).getId());
+            jsonData.put("service_name", servicesList.get(i).getName());
+            jsonData.put("service_description", servicesList.get(i).getDescription());
+            jsonData.put("service_price", servicesList.get(i).getPrice());
+
+            jsonArray.put(jsonData);
+        }
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonArray);
+        return jsonObject.toString();
+    }
+
 
 }
