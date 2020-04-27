@@ -10,8 +10,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 export class MasterComponent implements OnInit {
   isAuthorized = false;
-  private masterName;
-  private masterPhone;
+  masterName;
+  masterPhone;
   masterServices = [];
   masterComments: Array<{author_name: string, content: string}> = [];
   constructor(private tokenStorage: TokenStorageService, private http: HttpClient) {
