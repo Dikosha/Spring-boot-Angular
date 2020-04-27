@@ -121,8 +121,9 @@ export class AdminComponent implements OnInit {
       );
   }
   showEditService(id): void {
-    for(let i = 0; i < this.serviceList.length; i++){
-        if(this.serviceList[i].service_id === id){
+      // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.serviceList.length; i++) {
+        if (this.serviceList[i].service_id === id) {
             this.model.id = id;
             this.model.name = this.serviceList[i].service_name;
             this.model.description = this.serviceList[i].service_description;
