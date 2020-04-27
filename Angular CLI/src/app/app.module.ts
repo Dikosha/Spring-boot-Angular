@@ -17,7 +17,7 @@ import { BarberShopComponent } from './barber-shop/barber-shop.component';
 import { AboutComponent } from './about/about.component';
 import { BlogComponent } from './blog/blog.component';
 import { ContactComponent } from './contact/contact.component';
-import { AddRecordComponent } from './add-record/add-record.component';
+import {ProfileComponent} from "./profile/profile.component";
 
 const appRoutes: Routes  = [
   {
@@ -53,6 +53,10 @@ const appRoutes: Routes  = [
     component: ContactComponent
   },
   {
+    path: 'profile',
+    component: ProfileComponent
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }
@@ -72,7 +76,7 @@ const appRoutes: Routes  = [
     AboutComponent,
     BlogComponent,
     ContactComponent,
-    AddRecordComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
