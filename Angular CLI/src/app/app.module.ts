@@ -18,7 +18,7 @@ import { AboutComponent } from './about/about.component';
 import { BlogComponent } from './blog/blog.component';
 import { ContactComponent } from './contact/contact.component';
 import { AdminComponent } from './admin/admin.component';
-import { MasterComponent } from './master/master.component';
+import {MasterComponent} from './master/master.component';
 
 const appRoutes: Routes  = [
   {
@@ -58,13 +58,13 @@ const appRoutes: Routes  = [
     component: AdminComponent
   },
   {
-    path: '**',
-    component: NotFoundComponent
-  },
-  {
     path: 'master',
     component: MasterComponent
   },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({
@@ -81,8 +81,7 @@ const appRoutes: Routes  = [
     AboutComponent,
     BlogComponent,
     ContactComponent,
-    AdminComponent,
-    MasterComponent
+    AdminComponent
   ],
   imports: [
     BrowserModule,
