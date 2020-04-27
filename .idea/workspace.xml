@@ -2,24 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="96e4b58e-9367-4f17-933c-128333cb67fd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Spring-boot-Angular.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Angular CLI/src/assets/images/personal.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Angular CLI/src/assets/images/avatar.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Angular CLI/src/app/add-record/add-record.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Angular CLI/src/app/add-record/add-record.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Angular CLI/src/app/add-record/add-record.component.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Angular CLI/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Angular CLI/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Angular CLI/src/app/profile/profile.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/Angular CLI/src/app/profile/profile.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Angular CLI/src/app/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Angular CLI/src/app/profile/profile.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="Git.Settings">
     <favorite-branches>
@@ -49,11 +55,12 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Angular CLI/src/assets/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
@@ -62,6 +69,9 @@
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/Angular CLI/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Angular CLI/src/assets/images" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Angular CLI/src/assets/images" />
     </key>
@@ -102,7 +112,7 @@
       <updated>1586886265669</updated>
       <workItem from="1587917593511" duration="1255000" />
       <workItem from="1587919060220" duration="7840000" />
-      <workItem from="1587992118128" duration="2317000" />
+      <workItem from="1587992118128" duration="12661000" />
     </task>
     <servers />
   </component>
@@ -110,31 +120,37 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="164" y="66" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587919195283">
-      <screen x="0" y="23" width="1440" height="803" />
-    </state>
-    <state x="164" y="48" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1587919038209" />
-    <state x="164" y="65" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.795@0.23.1440.795" timestamp="1587917734424" />
-    <state x="164" y="66" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.803@0.23.1440.803" timestamp="1587919195283" />
-    <state width="1398" height="191" key="GridCell.Tab.0.bottom" timestamp="1587999894059">
+    <state x="164" y="48" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588014769490">
       <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="164" y="48" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1588014769490" />
+    <state x="164" y="65" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.795@0.23.1440.795" timestamp="1587917734424" />
+    <state x="375" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797@0.23.1440.797" timestamp="1588002039380" />
+    <state x="260" y="82" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.800@0.23.1440.800" timestamp="1588003753382" />
+    <state x="164" y="66" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.803@0.23.1440.803" timestamp="1587919195283" />
+    <state width="1398" height="191" key="GridCell.Tab.0.bottom" timestamp="1588005700701">
+      <screen x="0" y="23" width="1440" height="795" />
     </state>
     <state width="1398" height="191" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1587999894059" />
+    <state width="1398" height="191" key="GridCell.Tab.0.bottom/0.23.1440.795@0.23.1440.795" timestamp="1588005700701" />
     <state width="1358" height="191" key="GridCell.Tab.0.bottom/0.23.1440.803@0.23.1440.803" timestamp="1587919407160" />
-    <state width="1398" height="191" key="GridCell.Tab.0.center" timestamp="1587999894057">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1398" height="191" key="GridCell.Tab.0.center" timestamp="1588005700700">
+      <screen x="0" y="23" width="1440" height="795" />
     </state>
     <state width="1398" height="191" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1587999894057" />
+    <state width="1398" height="191" key="GridCell.Tab.0.center/0.23.1440.795@0.23.1440.795" timestamp="1588005700700" />
     <state width="1358" height="191" key="GridCell.Tab.0.center/0.23.1440.803@0.23.1440.803" timestamp="1587919407158" />
-    <state width="1398" height="191" key="GridCell.Tab.0.left" timestamp="1587999894055">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1398" height="191" key="GridCell.Tab.0.left" timestamp="1588005700699">
+      <screen x="0" y="23" width="1440" height="795" />
     </state>
     <state width="1398" height="191" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1587999894055" />
+    <state width="1398" height="191" key="GridCell.Tab.0.left/0.23.1440.795@0.23.1440.795" timestamp="1588005700699" />
     <state width="1358" height="191" key="GridCell.Tab.0.left/0.23.1440.803@0.23.1440.803" timestamp="1587919407158" />
-    <state width="1398" height="191" key="GridCell.Tab.0.right" timestamp="1587999894058">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1398" height="191" key="GridCell.Tab.0.right" timestamp="1588005700700">
+      <screen x="0" y="23" width="1440" height="795" />
     </state>
     <state width="1398" height="191" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1587999894058" />
+    <state width="1398" height="191" key="GridCell.Tab.0.right/0.23.1440.795@0.23.1440.795" timestamp="1588005700700" />
     <state width="1358" height="191" key="GridCell.Tab.0.right/0.23.1440.803@0.23.1440.803" timestamp="1587919407159" />
     <state x="374" y="263" key="com.intellij.ide.util.TipDialog" timestamp="1587992188025">
       <screen x="0" y="0" width="1440" height="900" />
@@ -146,5 +162,9 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="97" y="72" key="new project wizard/0.0.1440.900@0.0.1440.900" timestamp="1587918553152" />
+    <state x="592" y="344" width="350" height="300" key="org.angular.cli.generate" timestamp="1588005372888">
+      <screen x="0" y="23" width="1440" height="795" />
+    </state>
+    <state x="592" y="344" width="350" height="300" key="org.angular.cli.generate/0.23.1440.795@0.23.1440.795" timestamp="1588005372888" />
   </component>
 </project>

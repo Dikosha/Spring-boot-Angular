@@ -18,7 +18,8 @@ import { AboutComponent } from './about/about.component';
 import { BlogComponent } from './blog/blog.component';
 import { ContactComponent } from './contact/contact.component';
 import { AdminComponent } from './admin/admin.component';
-import {MasterComponent} from './master/master.component';
+import { MasterComponent } from './master/master.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const appRoutes: Routes  = [
   {
@@ -58,6 +59,10 @@ const appRoutes: Routes  = [
     component: AdminComponent
   },
   {
+    path: 'profile',
+    component: ProfileComponent
+  },
+  {
     path: 'master',
     component: MasterComponent
   },
@@ -81,7 +86,9 @@ const appRoutes: Routes  = [
     AboutComponent,
     BlogComponent,
     ContactComponent,
-    AdminComponent
+    AdminComponent,
+    MasterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
