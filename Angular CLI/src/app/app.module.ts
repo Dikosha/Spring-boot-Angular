@@ -19,6 +19,7 @@ import { BlogComponent } from './blog/blog.component';
 import { ContactComponent } from './contact/contact.component';
 import { AdminComponent } from './admin/admin.component';
 import { MasterComponent } from './master/master.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const appRoutes: Routes  = [
   {
@@ -58,12 +59,16 @@ const appRoutes: Routes  = [
     component: AdminComponent
   },
   {
-    path: '**',
-    component: NotFoundComponent
+    path: 'profile',
+    component: ProfileComponent
   },
   {
     path: 'master',
     component: MasterComponent
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   },
 ];
 
@@ -82,7 +87,8 @@ const appRoutes: Routes  = [
     BlogComponent,
     ContactComponent,
     AdminComponent,
-    MasterComponent
+    MasterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
