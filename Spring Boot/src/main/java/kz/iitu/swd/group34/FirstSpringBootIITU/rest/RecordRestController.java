@@ -107,8 +107,8 @@ public class RecordRestController {
 
         List<Record> recordList = recordRepository.findAll();
         JSONArray jsonArray = new JSONArray();
-        JSONObject jsonData = new JSONObject();
         for(int i = 0; i < recordList.size(); i++){
+            JSONObject jsonData = new JSONObject();
             jsonData.put("record_id", recordList.get(i).getId());
             jsonData.put("service_name", recordList.get(i).getService().getName());
             jsonData.put("master_name", recordList.get(i).getMaster().getName());

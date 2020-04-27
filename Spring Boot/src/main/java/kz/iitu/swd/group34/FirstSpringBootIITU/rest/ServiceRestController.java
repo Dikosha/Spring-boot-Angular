@@ -99,8 +99,8 @@ public class ServiceRestController {
     public String getAllUsers() {
         List<Service> servicesList = serviceRepository.findAll();
         JSONArray jsonArray = new JSONArray();
-        JSONObject jsonData = new JSONObject();
         for(int i = 0; i < servicesList.size(); i++){
+            JSONObject jsonData = new JSONObject();
             jsonData.put("service_id", servicesList.get(i).getId());
             jsonData.put("service_name", servicesList.get(i).getName());
             jsonData.put("service_description", servicesList.get(i).getDescription());
