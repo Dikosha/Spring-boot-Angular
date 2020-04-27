@@ -17,6 +17,7 @@ import { BarberShopComponent } from './barber-shop/barber-shop.component';
 import { AboutComponent } from './about/about.component';
 import { BlogComponent } from './blog/blog.component';
 import { ContactComponent } from './contact/contact.component';
+import { AdminComponent } from './admin/admin.component';
 
 const appRoutes: Routes  = [
   {
@@ -52,6 +53,10 @@ const appRoutes: Routes  = [
     component: ContactComponent
   },
   {
+    path: 'admin',
+    component: AdminComponent
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }
@@ -71,6 +76,7 @@ const appRoutes: Routes  = [
     AboutComponent,
     BlogComponent,
     ContactComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

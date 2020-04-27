@@ -13,26 +13,11 @@ import kz.iitu.swd.group34.FirstSpringBootIITU.services.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonComponent;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.security.Principal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -75,17 +60,16 @@ public class AdminRestController {
 
         List<Users> usersList = userRepository.findAll();
         JSONArray jsonArray = new JSONArray();
-        JSONObject jsonData = new JSONObject();
+
         for(int i = 0; i < usersList.size(); i++){
+            JSONObject jsonData = new JSONObject();
             jsonData.put("user_id", usersList.get(i).getId());
             jsonData.put("user_email", usersList.get(i).getEmail());
             jsonData.put("user_name", usersList.get(i).getName());
             jsonData.put("user_phone", usersList.get(i).getPhone());
-
             jsonArray.put(jsonData);
         }
         JSONObject jsonObject = new JSONObject();
-
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
         jsonObject.put("RESULT", jsonArray);

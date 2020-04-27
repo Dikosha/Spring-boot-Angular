@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    const url = 'http://localhost:8080/api/signin';
+    const url = 'http://localhost:8080/main/signin';
     this.http.post <any>(url, {
       email: this.model.email,
       password: this.model.password
