@@ -1,39 +1,42 @@
-<div class="admin-class">
-    <div class="table-div">
-        <table class="table">
+<div class="admin">
+    <section>
+        <br><br><br><br><h1>Admin page</h1>
+    <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
             <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Full Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Block/Unblock User</th>
-
-                </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Block/Unblock User</th>
+            </tr>
             </thead>
+        </table>
+    </div>
+    <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
             <tbody>
-
-                <tr *ngFor="let user of usersList">
-                    <th scope="row">{{user.num}}</th>
-                    <td>{{user.user_name}}</td>
-                    <td>{{user.user_email}}</td>
-                    <td>{{user.user_phone}}</td>
-                    <td>
-                        <button *ngIf="!user.user_isBlocked" (click)="blockUser(user.user_id)" class="btn btn-danger">Block</button>
-                        <button *ngIf="user.user_isBlocked" (click)="unblockUser(user.user_id)" class="btn btn-success">Unblock</button>
-                    </td>
-                </tr>
-
+            <tr *ngFor="let user of usersList">
+                <th scope="row">{{user.num}}</th>
+                <td>{{user.user_name}}</td>
+                <td>{{user.user_email}}</td>
+                <td>{{user.user_phone}}</td>
+                <td>
+                    <button *ngIf="!user.user_isBlocked" (click)="blockUser(user.user_id)" class="btn btn-outline-dark">Block</button>
+                    <button *ngIf="user.user_isBlocked" (click)="unblockUser(user.user_id)" class="btn btn-outline-success">Unblock</button>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
 
     <div class="service-div">
-        <h2>Services</h2>
-        <button type="button" class="btn btn-dark" (click)="emptyModel()" data-toggle="modal" data-target="#AddService">
+        <br><h1>Services</h1>
+        <button type="button" class="btn btn-primary btn-lg btn-block btn-light " (click)="emptyModel()" data-toggle="modal" data-target="#AddService">
             Add Service
         </button>
-
+        <div>&nbsp;</div>
         <!-- Modal -->
         <div class="modal fade" id="AddService" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -82,6 +85,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="modal fade" id="EditService" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -132,33 +136,44 @@
             </div>
         </div>
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Service Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Price</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            <tr *ngFor="let service of serviceList">
-                <th scope="row">{{service.num}}</th>
-                <td>{{service.service_name}}</td>
-                <td>{{service.service_description}}</td>
-                <td>{{service.service_price}}</td>
-                <td>
-                    <button (click)="showEditService(service.service_id)" type="button" data-toggle="modal" class="btn btn-success" data-target="#EditService">Edit</button>
-                </td>
-                <td>
-                    <button (click)="deleteService(service.service_id)" class="btn btn-danger">Delete</button>
-                </td>
-            </tr>
-
-            </tbody>
-        </table>
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Service Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                <tr *ngFor="let service of serviceList">
+                    <th scope="row">{{service.num}}</th>
+                    <td>{{service.service_name}}</td>
+                    <td>{{service.service_description}}</td>
+                    <td>{{service.service_price}}</td>
+                    <td>
+                        <button (click)="showEditService(service.service_id)" type="button" data-toggle="modal" class="btn btn-outline-success" data-target="#EditService">Edit</button>
+                    </td>
+                    <td>
+                        <button (click)="deleteService(service.service_id)" class="btn btn-outline-dark">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+    </section>
+
+
+<div class="made-with-love">
+
+</div>
+
 </div>
