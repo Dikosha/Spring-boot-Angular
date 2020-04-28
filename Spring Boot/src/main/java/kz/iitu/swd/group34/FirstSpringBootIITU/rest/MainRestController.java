@@ -119,7 +119,10 @@ public class MainRestController {
 //        System.out.println("101");
 //        System.out.println(loginRequest.toString());
 //        System.out.println(loginRequest.getPassword());
-
+        Users user = userRepository.findByEmail(loginRequest.getEmail()).get();
+        if(user.getIsBlocked()){
+            return null;
+        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
