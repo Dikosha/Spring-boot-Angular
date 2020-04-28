@@ -1,0 +1,21 @@
+.reserve{
+    background: -webkit-linear-gradient(left, #262225, #0e0e0e);
+    background: linear-gradient(to right, #262225, #0e0e0e);
+}
+p{
+    color: whitesmoke;
+}
+h2{
+    color: whitesmoke;
+    font-weight: bold;
+    text-align: left;
+}
+
+h3{
+    font-weight: bold;
+}
+
+h4{
+color: whitesmoke;
+text-align: right;
+}
