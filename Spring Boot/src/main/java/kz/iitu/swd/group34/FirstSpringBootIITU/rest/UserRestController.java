@@ -79,12 +79,14 @@ public class UserRestController {
         JSONArray jsonArrayOfRecords = new JSONArray();
         JSONObject jsonUserInformation = new JSONObject();
 
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy, HH:mm");
         for(Record r : records){
             JSONObject jsonRecord = new JSONObject();
             jsonRecord.put("record_id", r.getId());
             jsonRecord.put("record_master_name", r.getMaster().getName());
             jsonRecord.put("record_service", r.getService().getName());
-            jsonRecord.put("record_date", r.getDate());
+            jsonRecord.put("record_price", r.getService().getPrice());
+            jsonRecord.put("record_date", format.format(r.getDate()));
 
             jsonArrayOfRecords.put(jsonRecord);
         }
@@ -136,7 +138,7 @@ public class UserRestController {
         else {
             jsonObject.put("STATUS", 200);
             jsonObject.put("ERROR", "old password is incorrect");
-            jsonObject.put("RESULT", "passwords NOT updated");
+            jsonObject.put("RESULT", "passwords not updated");
         }
 
         return jsonObject.toString();

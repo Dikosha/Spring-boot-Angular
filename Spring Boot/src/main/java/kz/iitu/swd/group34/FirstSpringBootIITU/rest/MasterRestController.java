@@ -119,12 +119,13 @@ public class MasterRestController {
         JSONArray jsonArrayOfServices = new JSONArray();
         JSONObject jsonMasterInformation = new JSONObject();
 
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy, HH:mm");
         for(Comment c : comments){
             JSONObject jsonComment = new JSONObject();
             jsonComment.put("comment_id", c.getId());
             jsonComment.put("comment_author", c.getAuthor().getName());
             jsonComment.put("comment_content", c.getContent());
-            jsonComment.put("comment_date", c.getDate());
+            jsonComment.put("comment_date", format.format(c.getDate()));
 
             jsonArrayOfComments.put(jsonComment);
         }
