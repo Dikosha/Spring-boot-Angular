@@ -171,6 +171,9 @@
     </div>
     <div class="master-div">
         <br><h1>Master</h1>
+        <button type="button" class="btn btn-primary btn-lg btn-block btn-light " (click)="emptyMasterModel()" data-toggle="modal" data-target="#AddMaster">
+            Add Master
+        </button><br>
         <div class="tbl-header">
             <table cellpadding="0" cellspacing="0" border="0">
                 <thead>
@@ -217,7 +220,7 @@
                             <div class="form-group">
                                 <input type="hidden" [(ngModel)]="masterModel.id">
                                 <label for="name">Master Name</label>
-                                <input type="text" name="name" class="form-control" placeholder="Service Name" [(ngModel)]="masterModel.name"
+                                <input type="text" name="name" class="form-control" placeholder="Master Name" [(ngModel)]="masterModel.name"
                                        #masterName="ngModel"
                                        required
                                 />
@@ -251,6 +254,59 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AddMaster" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Master</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form name="form2" #f3="ngForm" (ngSubmit)="f3.form.valid && addMaster()">
+                        <div class="form-group">
+                            <input type="hidden" [(ngModel)]="masterModel.id">
+                            <label for="name">Master Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="Master Name" [(ngModel)]="masterModel.name"
+                                   #masterName="ngModel"
+                                   required
+                            />
+                            <div *ngIf="f3.submitted && masterName.invalid">
+                                <div *ngIf="masterName.errors?.required" class="inv-feedback">Field is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Master Phone</label>
+                            <input type="text" name="description"  class="form-control" placeholder="Phone" [(ngModel)]="masterModel.phone"
+                                   #masterPhone="ngModel"
+                                   required />
+                            <div *ngIf="f3.submitted && masterPhone.invalid">
+                                <div *ngIf="masterPhone.errors?.required" class="inv-feedback">Field is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <tr *ngFor="let service of serviceList">
+                                <td>
+                                    <h5> {{service.service_name}} </h5>
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="services_checkbox" [value]="service.service_id" >
+                                </td>
+                            </tr>
+                        </div>
+
+
+                        <div class="form-group form-button">
+                            <input type="submit" class="btn btn-danger" value="Add Master"/>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

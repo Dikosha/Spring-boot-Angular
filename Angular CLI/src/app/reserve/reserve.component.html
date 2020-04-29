@@ -15,49 +15,48 @@
                     <div class="wrapper">
                         <h2><span>Date</span></h2>
                     <label>
-                        <input type="text" class="dateselect" required="required"/>
+                        <input type="text" class="dateselect" id="date_id" required="required"/>
                     </label>
                     </div>
 
 
-                    <h2>Time</h2><div>&nbsp;</div>
-                    <div class="selectdiv">
+                    <h2>Time</h2>
+                    <div class="selectdiv" >
                         <label>
-                            <select>
-                                <option selected> Select Time </option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Last long option</option>
+                            <select class="form-control" style="width: 20rem" [(ngModel)]="time">
+                                <option value="12:00"> 12:00 </option>
+                                <option value="13:00"> 13:00 </option>
+                                <option value="14:00"> 14:00 </option>
+                                <option value="15:00"> 15:00 </option>
+                                <option value="16:00"> 16:00 </option>
+                                <option value="17:00"> 17:00 </option>
+                                <option value="18:00"> 18:00 </option>
+                                <option value="19:00"> 19:00 </option>
+                                <option value="20:00"> 20:00 </option>
                             </select>
                         </label>
                     </div>
                     <div>&nbsp;</div>
-                    <h2>Master</h2><div>&nbsp;</div>
+                    <h2>Master</h2>
                     <div class="selectdiv">
                         <label>
-                            <select>
-                                <option selected> Select Master </option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Last long option</option>
+                            <select class="form-control" style="width: 20rem" (change)="onMasterChange()" [(ngModel)]="model.master_id" >
+                                <option *ngFor="let master of masterList" [value]="master.master_id"> {{master.master_name}} </option>
                             </select>
                         </label>
                     </div>
                     <div>&nbsp;</div>
-                    <h2>Service</h2><div>&nbsp;</div>
+                    <h2>Service</h2>
                     <div class="selectdiv">
                         <label>
-                            <select>
-                                <option selected> Select Service </option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Last long option</option>
+                            <select class="form-control" style="width: 20rem" (change)="onServiceChange()" [(ngModel)]="model.service_id">
+                                <option *ngFor="let service of serviceList" [value]="service.service_id"> {{service.service_name + ' ' + service.service_price + '$'}} </option>
                             </select>
                         </label>
                     </div>
                     <div>&nbsp;</div>
-                      <h4>Total amount: 20$</h4><div>&nbsp;  </div>
-                        <p><a href="#" class="btn btn-primary btn-lg btn-block">Registration</a></p>
+                      <h4>{{servicePrice}}$</h4>
+                        <p><button class="btn btn-primary btn-lg btn-block" (click)="reserve()">Reserve</button></p>
                 </div>
             </div>
         </div>

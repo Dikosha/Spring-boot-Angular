@@ -123,8 +123,15 @@ export class AdminComponent implements OnInit {
       this.model.description = '';
       this.model.price = 0;
   }
+  emptyMasterModel(): void {
+      this.masterModel.id = 0;
+      this.masterModel.name = '';
+      this.masterModel.phone = '';
+      this.masterModel.services = [];
+  }
 
-  addService(): void {
+
+    addService(): void {
       // console.log(this.model);
       this.http.post('http://localhost:8080/admin/addService', this.model).subscribe(
           res => {
@@ -189,7 +196,7 @@ export class AdminComponent implements OnInit {
   }
     deleteMaster(id): void {
         // console.log(id);
-        this.http.post('http://localhost:8080/master/deleteMaster', id).subscribe(
+        this.http.post('http://localhost:8080/master/delete', id).subscribe(
             res => {
                 console.log(res);
                 // @ts-ignore
@@ -205,10 +212,9 @@ export class AdminComponent implements OnInit {
         );
     }
     editMaster(): void {
-        console.log(this.masterModel);
+        // console.log(this.masterModel);
         const checkBoxes = document.querySelectorAll('.services_checkbox');
-        const masterServices = [];
-        console.log(checkBoxes);
+        // console.log(checkBoxes);
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < checkBoxes.length; i++) {
             // @ts-ignore
@@ -217,7 +223,7 @@ export class AdminComponent implements OnInit {
                 this.masterModel.services.push(checkBoxes[i].value);
             }
         }
-        console.log(masterServices);
+        // console.log(masterServices);
         this.http.post('http://localhost:8080/master/editInformation', this.masterModel).subscribe(
             res => {
                 console.log(res);
@@ -265,6 +271,34 @@ export class AdminComponent implements OnInit {
                     console.log(this.serviceList);
                 }
             );
+    }
+    addMaster(): void {
+        // console.log(this.masterModel);
+        const checkBoxes = document.querySelectorAll('.services_checkbox');
+        // console.log(checkBoxes);
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < checkBoxes.length; i++) {
+            // @ts-ignore
+            if (checkBoxes[i].checked) {
+                // @ts-ignore
+                this.masterModel.services.push(checkBoxes[i].value);
+            }
+        }
+        // console.log(masterServices);
+        this.http.post('http://localhost:8080/master/addNew', this.masterModel).subscribe(
+            res => {
+                console.log(res);
+                // @ts-ignore
+                if (res.STATUS === 200) {
+                    location.reload();
+                } else {
+                    alert('Not Added. Try again.');
+                }
+            },
+            error => {
+                alert('Something is wrong');
+            }
+        );
     }
 }
 
