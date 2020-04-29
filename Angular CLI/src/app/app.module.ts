@@ -93,7 +93,7 @@ const appRoutes: Routes  = [
     AdminComponent,
     MasterComponent,
     ProfileComponent,
-    ReserveComponent
+    ReserveComponent,
   ],
   imports: [
     BrowserModule,
