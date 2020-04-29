@@ -70,7 +70,7 @@ public class CommentRestController {
         this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping(path = "/addCommentOnMaster")
+    @PostMapping(path = "/add")
     public String addCommentOnMaster(@RequestBody CommentPojo commentPojo ) {
 
         Comment comment = new Comment(null, masterRepository.findById(commentPojo.getMaster_id()).get(),
