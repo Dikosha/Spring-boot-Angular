@@ -166,12 +166,12 @@ public class MasterRestController {
             jsonArray.put(jsonData);
         }
 
-
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
         jsonObject.put("RESULT", jsonArray);
 
+        System.out.println(jsonObject.toString());
         return jsonObject.toString();
 
     }
