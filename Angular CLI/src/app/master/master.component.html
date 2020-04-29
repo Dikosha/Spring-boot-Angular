@@ -53,13 +53,15 @@
                             <ul>
                                 <li class="d-flex"><span>{{item.content}}</span></li>
                             </ul>
+                            <small style="color: #A6A6A6;">{{item.date}}</small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <br>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <button style="margin: auto; display: block;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" *ngIf="this.isAuthorized">
             Leave Comment
         </button>
 

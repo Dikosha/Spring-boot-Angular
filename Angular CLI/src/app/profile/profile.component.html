@@ -8,11 +8,11 @@
                     </div>
                     <div class="media-body">
                         <div class="personal_text">
-                            <h3>Donald McKinney</h3>
+                            <h3>{{userName}}</h3>
                             <h4>Guest</h4>
                             <ul class="list basic_info">
-                                <li><a href="#"><i class="lnr lnr-phone-handset"></i> 44 (012) 6954 783</a></li>
-                                <li><a href="#"><i class="lnr lnr-envelope"></i> businessplan@donald</a></li>
+                                <li><a href="#"><i class="lnr lnr-phone-handset"></i>{{userPhone}}</a></li>
+                                <li><a href="#"><i class="lnr lnr-envelope"></i>{{userEmail}}</a></li>
                             </ul>
                             <ul class="list personal_social">
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -21,9 +21,11 @@
                             </ul>
                         </div>
                         <p class="text-lg-right">
-                            <a href="#" class="btn btn-primary custom-prev">Edit profile</a>&nbsp;
-                            <a href="#" class="btn btn-dark custom-next">Change Password</a>
+                            <a href="#" class="btn btn-primary custom-prev" data-toggle="modal" data-target="#exampleModal">Edit profile</a>&nbsp;
+                            <a href="#" class="btn btn-dark custom-next" data-toggle="modal" data-target="#exampleModal2">Change Password</a>
                         </p>
+
+
                     </div>
 
                 </div>
@@ -48,66 +50,25 @@
                 <div class="container-table100">
                     <div class="wrap-table100">
                         <div class="table100 ver1">
-                            <div class="table100-firstcol">
-                                <table>
-                                    <thead>
-                                    <tr class="row100 head">
-                                        <th class="cell100 column1">Data & Time</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr class="row100 body">
-                                        <td class="cell100 column1">16 Nov 2012</td>
-                                    </tr>
 
-                                    <tr class="row100 body">
-                                        <td class="cell100 column1">16 Nov 2012</td>
-                                    </tr>
-
-                                    <tr class="row100 body">
-                                        <td class="cell100 column1">16 Nov 2012</td>
-                                    </tr>
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="wrap-table100-nextcols js-pscroll">
-                                <div class="table100-nextcols">
                                     <table>
                                         <thead>
                                         <tr class="row100 head">
-                                            <th class="cell100 column2">Full Name</th>
+                                            <th class="cell100 column2">Date & Time</th>
                                             <th class="cell100 column3">Master</th>
                                             <th class="cell100 column4">Service</th>
                                             <th class="cell100 column5">Price</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="row100 body">
-                                            <td class="cell100 column2">Ahmad</td>
-                                            <td class="cell100 column3">Dicosha</td>
-                                            <td class="cell100 column4">Strizhka</td>
-                                            <td class="cell100 column5">5000$</td>
-                                        </tr>
-
-                                        <tr class="row100 body">
-                                            <td class="cell100 column2">Ahmad</td>
-                                            <td class="cell100 column3">Dicosha</td>
-                                            <td class="cell100 column4">Strizhka</td>
-                                            <td class="cell100 column5">5000$</td>
-                                        </tr>
-
-                                        <tr class="row100 body">
-                                            <td class="cell100 column2">Ahmad</td>
-                                            <td class="cell100 column3">Dicosha</td>
-                                            <td class="cell100 column4">Strizhka</td>
-                                            <td class="cell100 column5">5000$</td>
+                                        <tr class="row100 body" *ngFor="let item of userRecords">
+                                            <td class="cell100 column2">{{item.record_date}}</td>
+                                            <td class="cell100 column3">{{item.record_master_name}}</td>
+                                            <td class="cell100 column4">{{item.record_service}}</td>
+                                            <td class="cell100 column5">{{item.record_price}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -115,3 +76,49 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Personal Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && editProfile()">
+                    <input type="text" class="form-control" value="{{userName}}" id="name" name="name">
+                    <input type="text" class="form-control" value="{{userPhone}}" id="phone" name="phone">
+                    <input type="text" class="form-control" value="{{userEmail}}" id="email" name="email">
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Update Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && updatePassword()">
+                    <input type="password" class="form-control" placeholder="Old Password" id="old" name="old">
+                    <input type="password" class="form-control" placeholder="New Password" id="new" name="new">
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
