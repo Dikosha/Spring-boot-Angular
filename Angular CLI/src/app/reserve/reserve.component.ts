@@ -11,6 +11,7 @@ export class ReserveComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // @ts-ignore
     $('.dateselect').datepicker({
       format: 'mm.dd.yyyy',
       // startDate: '-3d'

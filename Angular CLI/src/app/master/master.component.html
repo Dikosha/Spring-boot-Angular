@@ -74,15 +74,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form name="form" #f2="ngForm" (ngSubmit)="f2.form.valid && addComment()">
-                        <input type="text" class="form-control" placeholder="..." id="content" [(ngModel)]="model.content"/>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit">Save Comment</button>
+                        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addComment()">
+                            <textarea type="text" class="form-control" placeholder="..." id="content"></textarea>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit">Save Comment</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-

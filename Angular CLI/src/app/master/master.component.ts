@@ -13,13 +13,14 @@ export class MasterComponent implements OnInit {
   isAuthorized = false;
   masterName;
   masterPhone;
+  masterID;
   masterServices = [];
   masterComments: Array<{author_name: string, content: string}> = [];
   constructor(private tokenStorage: TokenStorageService, private http: HttpClient) {}
       // tslint:disable-next-line:label-position
-      model: CommentViewModel = {
+  model: CommentViewModel = {
           master_id: 0,
-          content: ' ',
+          content: '',
           user_id: 0
   };
 
@@ -30,9 +31,9 @@ export class MasterComponent implements OnInit {
       }
       const searchObject = window.location.search;
       const urlParams = new URLSearchParams(searchObject);
-      const masterID = urlParams.get('id')
+      this.masterID = urlParams.get('id');
       const url = 'http://localhost:8080/master/profile';
-      this.http.post <any>(url, masterID,
+      this.http.post <any>(url, this.masterID,
           {
               headers: new HttpHeaders({'Content-Type': 'application/json'})
           })
@@ -40,7 +41,7 @@ export class MasterComponent implements OnInit {
               data => {
                   console.log(data);
                   this.model.user_id = this.tokenStorage.getUser().id;
-                  this.model.master_id = Number(masterID);
+                  this.model.master_id = Number(this.masterID);
                   this.masterName = data.RESULT.master.master_name;
                   this.masterPhone = data.RESULT.master.master_phone;
                   for (let i = 0; i < data.RESULT.services.length; i++) {
@@ -72,7 +73,9 @@ export class MasterComponent implements OnInit {
   }
 
     addComment(): void {
-      console.log(this.model);
+        // @ts-ignore
+        this.model.content = document.getElementById('content').value;
+        console.log(this.model);
         // this.model.content = (document.getElementById('content'));
       /*this.http.post('http://localhost:8080/comment/add', this.model).subscribe(
             res => {
