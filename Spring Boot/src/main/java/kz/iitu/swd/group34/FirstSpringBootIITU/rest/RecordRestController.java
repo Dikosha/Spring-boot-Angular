@@ -110,6 +110,7 @@ public class RecordRestController {
         for(int i = 0; i < recordList.size(); i++){
             JSONObject jsonData = new JSONObject();
             jsonData.put("record_id", recordList.get(i).getId());
+            jsonData.put("record_datetime", recordList.get(i).getDate());
             jsonData.put("service_name", recordList.get(i).getService().getName());
             jsonData.put("master_name", recordList.get(i).getMaster().getName());
             jsonData.put("client_name", recordList.get(i).getClient().getName());

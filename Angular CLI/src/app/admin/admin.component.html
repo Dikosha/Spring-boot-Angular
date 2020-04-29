@@ -169,6 +169,93 @@
             </table>
         </div>
     </div>
+    <div class="master-div">
+        <br><h1>Master</h1>
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Master Name</th>
+                    <th scope="col">Master Phone</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                <tr *ngFor="let master of masterList">
+                    <th scope="row">{{master.num}}</th>
+                    <td>{{master.master_name}}</td>
+                    <td>{{master.master_phone}}</td>
+                    <td>
+                        <button (click)="showEditMaster(master.master_id)" type="button" data-toggle="modal" class="btn btn-outline-success" data-target="#EditMaster">Edit</button>
+                    </td>
+                    <td>
+                        <button (click)="deleteMaster(master.master_id)" class="btn btn-outline-dark">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal fade" id="EditMaster" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Master</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form name="form2" #f2="ngForm" (ngSubmit)="f2.form.valid && editMaster()">
+                            <div class="form-group">
+                                <input type="hidden" [(ngModel)]="masterModel.id">
+                                <label for="name">Master Name</label>
+                                <input type="text" name="name" class="form-control" placeholder="Service Name" [(ngModel)]="masterModel.name"
+                                       #masterName="ngModel"
+                                       required
+                                />
+                                <div *ngIf="f2.submitted && masterName.invalid">
+                                    <div *ngIf="masterName.errors?.required" class="inv-feedback">Field is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Master Phone</label>
+                                <input type="text" name="description"  class="form-control" placeholder="Phone" [(ngModel)]="masterModel.phone"
+                                       #masterPhone="ngModel"
+                                       required />
+                                <div *ngIf="f2.submitted && masterPhone.invalid">
+                                    <div *ngIf="masterPhone.errors?.required" class="inv-feedback">Field is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <tr *ngFor="let service of serviceList">
+                                    <td>
+                                       <h5> {{service.service_name}} </h5>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="services_checkbox" [value]="service.service_id" [checked]="service.checked">
+                                    </td>
+                                </tr>
+                            </div>
+
+
+                            <div class="form-group form-button">
+                                <input type="submit" class="btn btn-danger" value="Edit Master"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </section>
 
 

@@ -163,6 +163,7 @@ public class MasterRestController {
             JSONObject jsonData = new JSONObject();
             jsonData.put("master_id", m.getId());
             jsonData.put("master_name", m.getName());
+            jsonData.put("master_phone", m.getPhone());
             jsonArray.put(jsonData);
         }
 
@@ -174,6 +175,24 @@ public class MasterRestController {
 
         return jsonObject.toString();
 
+    }
+
+    @PostMapping(path = "/getServices")
+    public String getServices(@RequestBody Long id) {
+        Master master = masterRepository.findById(id).get();
+        JSONArray jsonArray = new JSONArray();
+        for(Service s : master.getServices()) {
+            JSONObject jsonData = new JSONObject();
+            jsonData.put("service_id", s.getId());
+            jsonData.put("service_name", s.getName());
+            jsonArray.put(jsonData);
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonArray);
+
+        return jsonObject.toString();
     }
 
 }
