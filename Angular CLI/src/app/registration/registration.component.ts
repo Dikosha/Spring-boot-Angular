@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {TokenStorageService} from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-registration',
@@ -7,8 +8,8 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./registration.component.css', '../../assets/css/styles.css']
 })
 export class RegistrationComponent implements OnInit {
-
-  constructor(private http: HttpClient) {
+    
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
 
   }
   model: RegistrationViewModel = {
@@ -22,6 +23,10 @@ export class RegistrationComponent implements OnInit {
   isRegistered = false;
 
   ngOnInit(): void {
+      if (this.tokenStorage.getUser().id) {
+          console.log(123);
+          window.location.href = 'reserve';
+      }
   }
 
   registration(): void {

@@ -21,13 +21,16 @@ export class ReserveComponent implements OnInit {
   model: ReserveViewModel = {
     id: 0,
     date: '',
-    client_id: this.tokenStorage.getUser().id,
+    client_id: 0,
     master_id: 0,
     service_id: 0
   };
 
 
   ngOnInit(): void {
+    if (this.tokenStorage.getUser() == null) {
+      window.location.href = 'login';
+    }
     // @ts-ignore
     $('.dateselect').datepicker({
       format: 'dd.mm.yyyy',
@@ -48,7 +51,7 @@ export class ReserveComponent implements OnInit {
 
   onMasterChange(): void {
     // console.log('123456');
-    this.http.post <any>(this.url + '/admin/getAllServices', {}, {
+    this.http.post <any>(this.url + '/master/getServices', Number(this.model.master_id), {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     })
         .subscribe(
@@ -60,7 +63,7 @@ export class ReserveComponent implements OnInit {
         );
   }
 
-  onServiceChange(): void {
+  onServiceChange(): void  {
     console.log('onservicechange');
     console.log(this.model);
     this.model.service_id = Number(this.model.service_id);
@@ -77,6 +80,7 @@ export class ReserveComponent implements OnInit {
   reserve(): void {
     // @ts-ignore
     this.date = document.getElementById('date_id').value;
+    this.model.client_id = this.tokenStorage.getUser().id;
     const dateArray = this.date.split('.');
     // @ts-ignore
     this.model.date =  dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0] + 'T' + this.time;

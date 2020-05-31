@@ -75,6 +75,7 @@ export class ProfileComponent implements OnInit {
                 console.log(res);
                 // @ts-ignore
                 alert(res.RESULT + '.  ' + res.ERROR);
+                location.reload();
             },
             error => {
                 alert('Something is wrong');
