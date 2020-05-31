@@ -70,5 +70,30 @@ public class ServiceRestController {
         this.authenticationManager = authenticationManager;
     }
 
+    @PostMapping(path = "/getAll")
+    public String getAllMasters() {
+
+        List<Service> services = serviceRepository.findAll();
+        JSONArray jsonArray = new JSONArray();
+
+        for(Service s : services) {
+            JSONObject jsonData = new JSONObject();
+            jsonData.put("service_id", s.getId());
+            jsonData.put("service_name", s.getName());
+            jsonData.put("service_description", s.getDescription());
+            jsonData.put("service_price", s.getPrice());
+            jsonArray.put(jsonData);
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonArray);
+
+        System.out.println(jsonObject.toString());
+        return jsonObject.toString();
+
+    }
+
 
 }
