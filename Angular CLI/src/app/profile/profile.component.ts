@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
     };
 
   ngOnInit(): void {
-    console.log(this.tokenStorage.getUser());
+    // console.log(this.tokenStorage.getUser());
     const url = 'http://localhost:8080/user/profile';
     this.http.post <any>(url,  this.userId, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })

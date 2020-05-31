@@ -186,6 +186,8 @@ public class MasterRestController {
             JSONObject jsonData = new JSONObject();
             jsonData.put("service_id", s.getId());
             jsonData.put("service_name", s.getName());
+            jsonData.put("service_price", s.getPrice());
+
             jsonArray.put(jsonData);
         }
         JSONObject jsonObject = new JSONObject();
