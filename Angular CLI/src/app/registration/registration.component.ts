@@ -8,7 +8,6 @@ import {TokenStorageService} from '../_services/token-storage.service';
   styleUrls: ['./registration.component.css', '../../assets/css/styles.css']
 })
 export class RegistrationComponent implements OnInit {
-    
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
 
   }
