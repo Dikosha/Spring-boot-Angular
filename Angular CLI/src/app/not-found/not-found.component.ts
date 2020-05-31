@@ -10,6 +10,11 @@ export class NotFoundComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    const footer = document.querySelector('footer');
+    footer.innerHTML = '';
+
+    const header = document.querySelector('header');
+    header.innerHTML = '';
   }
 
 }

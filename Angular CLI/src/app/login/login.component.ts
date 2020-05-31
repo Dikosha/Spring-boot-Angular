@@ -27,6 +27,12 @@ export class LoginComponent implements OnInit {
   };
 
   ngOnInit(): void {
+      console.log(this.tokenStorage.getUser());
+
+      if (this.tokenStorage.getUser().id) {
+          console.log(123);
+          window.location.href = 'reserve';
+      }
   }
 
   login(): void {
@@ -41,7 +47,6 @@ export class LoginComponent implements OnInit {
           data => {
             this.tokenStorage.saveToken(data.accessToken);
             this.tokenStorage.saveUser(data);
-
             this.isLoginFailed = false;
             this.isLoggedIn = true;
             this.roles = this.tokenStorage.getUser().roles;

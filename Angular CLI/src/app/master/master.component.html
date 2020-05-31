@@ -1,4 +1,4 @@
-<section class="home_banner_area">
+<section class="home_banner_area" xmlns="http://www.w3.org/1999/html">
     <div class="container box_1620">
         <div class="banner_inner d-flex align-items-center">
             <div class="banner_content">
@@ -28,7 +28,7 @@
     </div>
 </section>
 
-<div class="site-section bg-light">
+<div class="site-section">
     <div class="container">
         <div class="row justify-content-center  mb-5">
             <div class="col-md-7 text-center">
@@ -36,7 +36,7 @@
                 <p class="mb-5 lead">Here are collected all the reviews about the works of the master</p>
 
                 <p class="text-center">
-                    <a href="#" class="btn btn-primary custom-prev">Prev &nbsp;</a>
+                    <a href="#" class="btn btn-primary custom-prev">Prev</a>&nbsp;&nbsp;&nbsp;
                     <a href="#" class="btn btn-primary custom-next">Next</a>
                 </p>
             </div>
@@ -53,13 +53,38 @@
                             <ul>
                                 <li class="d-flex"><span>{{item.content}}</span></li>
                             </ul>
+                            <small style="color: #A6A6A6;">{{item.date}}</small>
                         </div>
-
                     </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <!-- Button trigger modal -->
+        <button style="margin: auto; display: block;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" *ngIf="this.isAuthorized">
+            Leave Comment
+        </button>
 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Leave Comment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addComment()">
+                            <textarea type="text" class="form-control" placeholder="..." id="content"></textarea>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit">Save Comment</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-

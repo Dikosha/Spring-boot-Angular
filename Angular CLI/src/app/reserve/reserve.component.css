@@ -1,0 +1,299 @@
+.reserve{
+    background: -webkit-linear-gradient(left, #262225, #0e0e0e);
+    background: linear-gradient(to right, #262225, #0e0e0e);
+}
+p{
+    color: whitesmoke;
+}
+h2{
+    color: whitesmoke;
+    font-weight: bold;
+    text-align: left;
+}
+
+h3{
+    font-weight: bold;
+}
+
+h4{
+color: whitesmoke;
+text-align: right;
+}
+
+label {
+    position: relative;
+    display: block;
+}
+label > input {
+    position: relative;
+    color: white;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    height: 45px;
+    width: 100%;
+    font-size: 16px;
+    margin: 0 0 30px 0;
+    padding: 0;
+    box-shadow: none;
+    box-sizing: content-box;
+    transition: all .3s;
+}
+label > input:valid + span {
+    transform: translateY(-25px) scale(0.8);
+    transform-origin: 0;
+}
+label > input:valid {
+    border-bottom: 1px solid #cb444a;
+    box-shadow: 0 1px 0 0 #cb444a;
+}
+label > span {
+    color: #9e9e9e;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    cursor: text;
+    transition: .2s ease-out;
+}
+label > input:focus + span {
+    transform: translateY(-25px) scale(0.8);
+    transform-origin: 0;
+    color:  #cb444a;
+}
+label > input:focus {
+    border-bottom: 1px solid #cb444a;
+    box-shadow: 0 1px 0 0 #cb444a;
+}
+
+
+
+
+/*Bootstrap Calendar*/
+.datepicker {
+    border-radius: 0;
+    padding: 0;
+}
+.datepicker-days table thead, .datepicker-days table tbody, .datepicker-days table tfoot {
+    padding: 10px;
+    display: list-item;
+}
+.datepicker-days table thead, .datepicker-months table thead, .datepicker-years table thead, .datepicker-decades table thead, .datepicker-centuries table thead {
+    background: #cb444a;
+    color: #ffffff;
+    border-radius: 0;
+}
+.datepicker-days table thead tr:nth-child(2n+0) td, .datepicker-days table thead tr:nth-child(2n+0) th {
+    border-radius: 3px;
+}
+.datepicker-days table thead tr:nth-child(3n+0) {
+    text-transform: uppercase;
+    font-weight: 300 !important;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+.table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
+    padding: 11px 13px;
+}
+.datepicker-months table thead td, .datepicker-months table thead th, .datepicker-years table thead td, .datepicker-years table thead th, .datepicker-decades table thead td, .datepicker-decades table thead th, .datepicker-centuries table thead td, .datepicker-centuries table thead th {
+    border-radius: 0;
+}
+.datepicker td, .datepicker th {
+    border-radius: 50%;
+    padding: 0 12px;
+}
+.datepicker-days table thead, .datepicker-months table thead, .datepicker-years table thead, .datepicker-decades table thead, .datepicker-centuries table thead {
+    background: #cb444a;
+    color: #ffffff;
+    border-radius: 0;
+}
+.datepicker table tr td.active, .datepicker table tr td.active:hover, .datepicker table tr td.active.disabled, .datepicker table tr td.active.disabled:hover {
+    background-image: none;
+}
+.datepicker .prev, .datepicker .next {
+    color: rgba(255, 255, 255, 0.5);
+    transition: 0.3s;
+    width: 37px;
+    height: 37px;
+}
+.datepicker .prev:hover, .datepicker .next:hover {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.99);
+    font-size: 21px;
+}
+.datepicker .datepicker-switch {
+    font-size: 24px;
+    font-weight: 400;
+    transition: 0.3s;
+}
+.datepicker .datepicker-switch:hover {
+    color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+}
+.datepicker table tr td span {
+    border-radius: 2px;
+    margin: 3%;
+    width: 27%;
+}
+.datepicker table tr td span.active, .datepicker table tr td span.active:hover, .datepicker table tr td span.active.disabled, .datepicker table tr td span.active.disabled:hover {
+    background-color: #cb444a;
+    background-image: none;
+}
+.dropdown-menu {
+    border: 1px solid rgba(0,0,0,.1);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+.datepicker-dropdown.datepicker-orient-top:before {
+    border-top: 7px solid rgba(0,0,0,.1);
+}
+
+.dropcontainer {
+    position:relative;
+    font-size: 16px;
+    color: #777;
+}
+
+.trigger {
+    color: #777;
+    padding: 10px;
+    font-size: 16px;
+    width: 50%;
+    display: block;
+    border: 1px solid #ccc;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.trigger:hover {
+    color: #777;
+}
+
+.activetrigger {
+    color: #777;
+    padding: 10px;
+    font-size: 16px;
+    width: 50%;
+    display: block;
+    border: 1px solid #ccc;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.activetrigger:hover {
+    color: #777;
+}
+
+.activetrigger:active {
+    color: #777;
+}
+
+.dropcontainer ul {
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-top: none;
+    background: #fff;
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+    width: 50%;
+    z-index: 100;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.dropcontainer ul li {
+    padding: 5px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.dropcontainer ul li:hover {
+    background: #f5f5f5;
+    outline: none;
+}
+
+.dropcontainer ul li:first-child {
+    display: none;
+}
+
+.dropcontainer ul li:last-child {
+    border-bottom: none;
+}
+
+.dropdownhidden {
+    display: none;
+}
+
+.dropdownvisible {
+    height: auto;
+}
+
+
+
+.selectdiv {
+    position: relative;
+    /*Don't really need this just for demo styling*/
+
+    float: left;
+    min-width: auto;
+    margin: 5px 33%;
+}
+
+/* IE11 hide native button (thanks Matt!) */
+select::-ms-expand {
+    display: none;
+}
+
+.selectdiv:after {
+    content: '<>';
+    font: 17px "Consolas", monospace;
+    color: #333;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    right: 11px;
+    /*Adjust for position however you want*/
+
+    top: 18px;
+    padding: 0 0 2px;
+    border-bottom: 1px solid #999;
+    /*left line */
+
+    position: absolute;
+    pointer-events: none;
+}
+
+.selectdiv select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Add some styling */
+
+    display: block;
+    width: 200%;
+    max-width: 320px;
+    height: 50px;
+    float: right;
+    margin: 5px 0px;
+    padding: 0px 24px;
+    font-size: 16px;
+    line-height: 1.75;
+    color: #333;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -ms-word-break: normal;
+    word-break: normal;
+}

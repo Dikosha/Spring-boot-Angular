@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -20,6 +19,7 @@ import { ContactComponent } from './contact/contact.component';
 import { AdminComponent } from './admin/admin.component';
 import { MasterComponent } from './master/master.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ReserveComponent } from './reserve/reserve.component';
 
 const appRoutes: Routes  = [
   {
@@ -67,6 +67,10 @@ const appRoutes: Routes  = [
     component: MasterComponent
   },
   {
+    path: 'reserve',
+    component: ReserveComponent
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }
@@ -88,7 +92,8 @@ const appRoutes: Routes  = [
     ContactComponent,
     AdminComponent,
     MasterComponent,
-    ProfileComponent
+    ProfileComponent,
+    ReserveComponent,
   ],
   imports: [
     BrowserModule,

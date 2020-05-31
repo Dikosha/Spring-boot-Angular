@@ -119,12 +119,13 @@ public class MasterRestController {
         JSONArray jsonArrayOfServices = new JSONArray();
         JSONObject jsonMasterInformation = new JSONObject();
 
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy, HH:mm");
         for(Comment c : comments){
             JSONObject jsonComment = new JSONObject();
             jsonComment.put("comment_id", c.getId());
             jsonComment.put("comment_author", c.getAuthor().getName());
             jsonComment.put("comment_content", c.getContent());
-            jsonComment.put("comment_date", c.getDate());
+            jsonComment.put("comment_date", format.format(c.getDate()));
 
             jsonArrayOfComments.put(jsonComment);
         }
@@ -163,17 +164,38 @@ public class MasterRestController {
             JSONObject jsonData = new JSONObject();
             jsonData.put("master_id", m.getId());
             jsonData.put("master_name", m.getName());
+            jsonData.put("master_phone", m.getPhone());
             jsonArray.put(jsonData);
         }
-
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("STATUS", 200);
         jsonObject.put("ERROR", "");
         jsonObject.put("RESULT", jsonArray);
 
+        System.out.println(jsonObject.toString());
         return jsonObject.toString();
 
+    }
+
+    @PostMapping(path = "/getServices")
+    public String getServices(@RequestBody Long id) {
+        Master master = masterRepository.findById(id).get();
+        JSONArray jsonArray = new JSONArray();
+        for(Service s : master.getServices()) {
+            JSONObject jsonData = new JSONObject();
+            jsonData.put("service_id", s.getId());
+            jsonData.put("service_name", s.getName());
+            jsonData.put("service_price", s.getPrice());
+
+            jsonArray.put(jsonData);
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("STATUS", 200);
+        jsonObject.put("ERROR", "");
+        jsonObject.put("RESULT", jsonArray);
+
+        return jsonObject.toString();
     }
 
 }
